@@ -26,8 +26,6 @@ import views.traveler.RegisterView;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private Color backgroundButtons;
-
     /**
      * Creates new form MainView
      *
@@ -39,7 +37,6 @@ public class MainView extends javax.swing.JFrame {
         setTitle("Vista principal del aeropuerto");
         setLocationRelativeTo(null);
         setResizable(false);
-        backgroundButtons = btnHome.getBackground();
         hidePanelMenu();
         setLaberlUserNameLogged();
     }
@@ -61,10 +58,6 @@ public class MainView extends javax.swing.JFrame {
 
     private void hidePanelMenu() {
         Animacion.Animacion.mover_izquierda(0, -300, 1, 1, panelMenu);
-    }
-
-    private void setBackgroundOpaque() {
-
     }
 
     public void validateDesktop() {
