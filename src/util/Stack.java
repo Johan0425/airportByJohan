@@ -21,7 +21,7 @@ public class Stack<T> implements Serializable {
         this.size = 0;
     }
 
-    public T peek() {
+    public T top() {
         if (isEmpty()) {
             return null;
         } else {

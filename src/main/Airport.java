@@ -12,6 +12,7 @@ import view.main.MainView;
  */
 public class Airport {
 
+
     /**
      * @param args the command line arguments
      */
@@ -44,5 +45,4 @@ public class Airport {
             new MainView().setVisible(true);
         });
     }
-
 }
