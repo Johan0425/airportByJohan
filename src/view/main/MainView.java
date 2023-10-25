@@ -4,12 +4,21 @@
  */
 package view.main;
 
+import controllers.LoginController;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import model.Airline;
+import model.Employee;
+import model.User;
+import singleton.Singleton;
 import view.login.LoginView;
+import views.admin.AdminTasks;
+import views.adminAirlines.AirlineAdminTasks;
+import views.traveler.RegisterView;
 
 /**
  *
@@ -21,6 +30,7 @@ public class MainView extends javax.swing.JFrame {
 
     /**
      * Creates new form MainView
+     *
      */
     public MainView() {
         initComponents();
@@ -31,21 +41,65 @@ public class MainView extends javax.swing.JFrame {
         setResizable(false);
         backgroundButtons = btnHome.getBackground();
         hidePanelMenu();
+        setLaberlUserNameLogged();
+    }
+
+    private void setLaberlUserNameLogged() {
+        try {
+            User userLoggued = Singleton.getINSTANCE().getUser();
+            String username = userLoggued.getUsername();
+            lblUserName.setText(username);
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public void setLabelUserName(String name) {
+        lblUserName.setText(name);
     }
 
     private void hidePanelMenu() {
-        Animacion.Animacion.mover_izquierda(0, -264, 1, 1, panelMenu);
+        Animacion.Animacion.mover_izquierda(0, -300, 1, 1, panelMenu);
     }
 
     private void setBackgroundOpaque() {
 
     }
 
-    private void validateDesktop() {
+    public void validateDesktop() {
         if (dsMain.getComponentCount() > 0) {
             dsMain.getComponent(0).setVisible(false);
             dsMain.remove(0);
         }
+    }
+
+    public void openAirlineAdminTasks(Employee employee, Airline airline) {
+        validateDesktop();
+        AirlineAdminTasks view = new AirlineAdminTasks(employee, airline);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openAdminTasks(User user) {
+        validateDesktop();
+        AdminTasks view = new AdminTasks(user);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openLoginView() {
+        validateDesktop();
+        LoginView view = new LoginView(this);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openRegisterView() {
+        validateDesktop();
+        RegisterView view = new RegisterView(this);
+        dsMain.add(view);
+        view.setVisible(true);
     }
 
     /**
@@ -59,17 +113,12 @@ public class MainView extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblAirlineName = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
         btnSettings = new javax.swing.JButton();
-        panelMenu = new javax.swing.JPanel();
-        btnHome = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
-        btnAirlines = new javax.swing.JButton();
-        btnAirlines1 = new javax.swing.JButton();
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/fondo-blanco-2.jpeg"));
         Image image = icon.getImage();
         dsMain = new javax.swing.JDesktopPane(){
@@ -77,6 +126,11 @@ public class MainView extends javax.swing.JFrame {
                 g.drawImage(image,0,0,getWidth(),getHeight(),this);
             }
         };
+        panelMenu = new javax.swing.JPanel();
+        btnHome = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
+        btnAirlines = new javax.swing.JButton();
+        btnAirlines1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,17 +138,15 @@ public class MainView extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 153));
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("INICIE SESIÓN");
+        lblUserName.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/international-departures.png"))); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("AVIANCA");
+        lblAirlineName.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        lblAirlineName.setForeground(new java.awt.Color(255, 255, 255));
 
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menu.png"))); // NOI18N
         btnMenu.setContentAreaFilled(false);
@@ -117,11 +169,11 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(47, 47, 47)
-                .addComponent(jLabel2)
+                .addComponent(lblUserName)
                 .addGap(137, 137, 137)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jLabel5)
+                .addComponent(lblAirlineName)
                 .addGap(132, 132, 132)
                 .addComponent(btnSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
@@ -145,12 +197,23 @@ public class MainView extends javax.swing.JFrame {
                                     .addComponent(btnMenu))
                                 .addGap(14, 14, 14))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(lblAirlineName)
                                 .addGap(24, 24, 24))))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(lblUserName)
                 .addGap(24, 24, 24))
+        );
+
+        javax.swing.GroupLayout dsMainLayout = new javax.swing.GroupLayout(dsMain);
+        dsMain.setLayout(dsMainLayout);
+        dsMainLayout.setHorizontalGroup(
+            dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1227, Short.MAX_VALUE)
+        );
+        dsMainLayout.setVerticalGroup(
+            dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panelMenu.setBackground(new java.awt.Color(204, 204, 204));
@@ -184,7 +247,7 @@ public class MainView extends javax.swing.JFrame {
         btnAirlines.setBackground(new java.awt.Color(255, 255, 255));
         btnAirlines.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
         btnAirlines.setForeground(new java.awt.Color(0, 0, 0));
-        btnAirlines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/air-transport.png"))); // NOI18N
+        btnAirlines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
         btnAirlines.setText("       REGISTRO");
         btnAirlines.setBorder(null);
         btnAirlines.setContentAreaFilled(false);
@@ -217,7 +280,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAirlines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAirlines1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAirlines1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelMenuLayout.setVerticalGroup(
@@ -230,18 +293,7 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(btnAirlines, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAirlines1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 716, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout dsMainLayout = new javax.swing.GroupLayout(dsMain);
-        dsMain.setLayout(dsMainLayout);
-        dsMainLayout.setHorizontalGroup(
-            dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1252, Short.MAX_VALUE)
-        );
-        dsMainLayout.setVerticalGroup(
-            dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 717, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -250,7 +302,7 @@ public class MainView extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(0, 0, 0)
@@ -262,18 +314,17 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dsMain)))
+                    .addComponent(dsMain)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,28 +337,26 @@ public class MainView extends javax.swing.JFrame {
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         int posicion = panelMenu.getX();
         if (posicion > -1) {
-            Animacion.Animacion.mover_izquierda(0, -264, 2, 2, panelMenu);
+            Animacion.Animacion.mover_izquierda(0, -300, 2, 2, panelMenu);
         } else {
-            Animacion.Animacion.mover_derecha(-264, 0, 2, 2, panelMenu);
+            Animacion.Animacion.mover_derecha(-300, 0, 2, 2, panelMenu);
         }
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        
-        
+        validateDesktop();
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       new LoginView().setVisible(true);
-       this.dispose();
+        openLoginView();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnAirlinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlinesActionPerformed
-        validateDesktop();
+        openRegisterView();
     }//GEN-LAST:event_btnAirlinesActionPerformed
 
     private void btnAirlines1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlines1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAirlines1ActionPerformed
 
 
@@ -319,11 +368,11 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSettings;
     private javax.swing.JDesktopPane dsMain;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblAirlineName;
+    private javax.swing.JLabel lblUserName;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
