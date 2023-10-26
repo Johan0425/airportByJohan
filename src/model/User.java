@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
     
-    protected final Role role;
+    protected Role role;
     protected final String id;
     protected final String fullname;
     
@@ -32,6 +32,10 @@ public class User implements Serializable {
         return role;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
     public String getId() {
         return id;
     }

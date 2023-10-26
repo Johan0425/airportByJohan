@@ -47,7 +47,7 @@ public class Singleton {
         if (user != null) {
             return user;
         } else {
-            throw new IllegalStateException("El usuario no está inicializado.");
+            throw new IllegalStateException("Debe iniciar sesión primero. no hay un usuario logueado.");
         }
     }
 

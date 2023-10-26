@@ -24,7 +24,15 @@ public class EmployeesController extends BaseController {
         }
         return employees;
     }
-    
+
+    public void addEmployeeAsTraveler(Employee employee) {
+        Employee aux = searchEmployee(employee.getId());
+        if (aux == null) {
+            users.addDato(employee);
+            Singleton.getINSTANCE().writeUser();
+        }
+    }
+
     public void addEmployee(Employee employee) {
         Employee aux = searchEmployee(employee.getId());
         if (aux == null) {

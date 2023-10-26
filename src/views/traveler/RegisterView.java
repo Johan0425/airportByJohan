@@ -10,6 +10,7 @@ import exceptions.UsernameInUseException;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.Employee;
 import model.Traveler;
 import view.main.MainView;
 
@@ -39,6 +40,41 @@ public class RegisterView extends javax.swing.JInternalFrame {
         hideWarnings();
     }
 
+    private void editableFields() {
+        txtName.setEditable(true);
+        txtUsername.setEditable(true);
+        txtPassword.setEditable(true);
+    }
+
+    private void noEditableFields() {
+        txtName.setEditable(false);
+        txtUsername.setEditable(false);
+        txtPassword.setEditable(false);
+    }
+
+    private void cleanFields() {
+        txtId.setText("");
+        txtName.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
+    }
+
+    private void cleanFillFields() {
+        txtName.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
+    }
+
+    private void fillFields(String id) {
+        Employee employee = controller.searchEmployee(id);
+        if (employee != null) {
+            txtName.setText(employee.getFullname());
+            txtUsername.setText(employee.getUsername());
+            txtPassword.setText(employee.getPassword());
+
+        }
+    }
+
     private void signUp() {
         if (hasEmptyFields()) {
             JOptionPane.showMessageDialog(null, "Ingrsese todos los datos");
@@ -47,14 +83,26 @@ public class RegisterView extends javax.swing.JInternalFrame {
 
         String id = txtId.getText();
         String name = txtName.getText();
-        int age = Integer.parseInt(txtAge.getText());
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        try {
-            Traveler traveler = new Traveler(age, id, name, username, password);
-            controller.addTraveler(traveler);
+        Employee employee = controller.searchEmployee(id);
+        Traveler traveler = new Traveler(id, name, username, password);
 
+        if (employee != null) {
+            int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como empleado del aeropuerto. "
+                    + "¿Desea registrarse como viajero?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                controller.addEmployeeAsTraveler(traveler);
+                JOptionPane.showMessageDialog(null, "Registro exitoso");
+                returnToLogin();
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo hacer");
+        }
+        try {
+            controller.addTraveler(traveler);
             JOptionPane.showMessageDialog(null, "Registro exitoso");
             returnToLogin();
         } catch (UserAlreadyRegisteredException ex) {
@@ -67,31 +115,52 @@ public class RegisterView extends javax.swing.JInternalFrame {
 
     private void validateFields() {
         String id = txtId.getText();
-        String username = txtUsername.getText();
 
         Traveler traveler = controller.searchTraveler(id);
-        boolean usernameInUse = controller.isUsernameInUse(username);
+        Employee employee = controller.searchEmployee(id);
 
-        boolean enableBtnAddTraveler;
+        boolean enableBtnAddTraveler = true;
 
-        if (!id.isEmpty() && traveler != null) {
+        if (!id.isEmpty() && employee != null) {
+            lblEmployeeFound.setVisible(true);
+            fillFields(id);
+            noEditableFields();
+        } else {
+            lblEmployeeFound.setVisible(false);
+            editableFields();
+            cleanFillFields();
+        }
+
+        if (traveler != null) {
             idWarning.setVisible(true);
-            enableBtnAddTraveler = false;
-        } else if (!username.isEmpty() && usernameInUse) {
-            usernameWarning.setVisible(true);
             enableBtnAddTraveler = false;
         } else {
             idWarning.setVisible(false);
-            usernameWarning.setVisible(false);
-            enableBtnAddTraveler = true;
         }
 
+        btnSingUp.setEnabled(enableBtnAddTraveler);
+    }
+
+    private void validateUsername() {
+        String username = txtUsername.getText();
+
+        boolean usernameInUse = controller.isUsernameInUse(username);
+
+        boolean enableBtnAddTraveler = true;
+
+        if (!username.isEmpty() && usernameInUse) {
+            usernameWarning.setVisible(true);
+            enableBtnAddTraveler = false;
+        } else {
+            usernameWarning.setVisible(false);
+
+        }
         btnSingUp.setEnabled(enableBtnAddTraveler);
 
     }
 
     private boolean hasEmptyFields() {
-        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtAge.getText().isEmpty() || txtUsername.getText().isEmpty()
+        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtUsername.getText().isEmpty()
                 || txtPassword.getText().isEmpty());
     }
 
@@ -103,6 +172,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
     private void hideWarnings() {
         idWarning.setVisible(false);
         usernameWarning.setVisible(false);
+        lblEmployeeFound.setVisible(false);
     }
 
     /**
@@ -117,14 +187,10 @@ public class RegisterView extends javax.swing.JInternalFrame {
         mainPanel = new javax.swing.JPanel();
         btnSingUp = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        lblLogin = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        txtAge = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
@@ -135,6 +201,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
         usernameWarning = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        lblEmployeeFound = new javax.swing.JLabel();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -147,15 +214,6 @@ public class RegisterView extends javax.swing.JInternalFrame {
         btnSingUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSingUpActionPerformed(evt);
-            }
-        });
-
-        lblLogin.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
-        lblLogin.setForeground(new java.awt.Color(0, 102, 153));
-        lblLogin.setText("LOGIN");
-        lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblLoginMouseClicked(evt);
             }
         });
 
@@ -177,17 +235,6 @@ public class RegisterView extends javax.swing.JInternalFrame {
         txtName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNameKeyTyped(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 153));
-        jLabel3.setText("Edad:");
-
-        txtAge.setBorder(null);
-        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAgeKeyTyped(evt);
             }
         });
 
@@ -243,14 +290,17 @@ public class RegisterView extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(0, 102, 153));
         jLabel4.setText("ID:");
 
+        lblEmployeeFound.setBackground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 10)); // NOI18N
+        lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setText("EMPLEADO YA REGISTRADO");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(lblLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(51, 1130, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addGap(26, 26, 26))
             .addGroup(mainPanelLayout.createSequentialGroup()
@@ -262,11 +312,9 @@ public class RegisterView extends javax.swing.JInternalFrame {
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel3))
+                                    .addComponent(jLabel6))
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)
                                 .addGap(101, 101, 101)))
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +322,8 @@ public class RegisterView extends javax.swing.JInternalFrame {
                                 .addComponent(idWarning)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSeparator1)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblEmployeeFound))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(usernameWarning)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -283,9 +332,6 @@ public class RegisterView extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jSeparator2)
                                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator3)
-                                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jSeparator6)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -298,9 +344,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLogin))
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79)
                 .addComponent(idWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -308,20 +352,16 @@ public class RegisterView extends javax.swing.JInternalFrame {
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(2, 2, 2)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(lblEmployeeFound)
+                .addGap(41, 41, 41)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
                 .addComponent(usernameWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -337,7 +377,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(139, 139, 139)
                 .addComponent(btnSingUp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -381,7 +421,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNameKeyTyped
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
-        validateFields();
+        validateUsername();
     }//GEN-LAST:event_txtUsernameKeyReleased
 
     private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
@@ -401,12 +441,8 @@ public class RegisterView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCloseActionPerformed
-
-    private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         returnToLogin();
-    }//GEN-LAST:event_lblLoginMouseClicked
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -414,33 +450,21 @@ public class RegisterView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
 
-    private void txtAgeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyTyped
-        String age = txtAge.getText();
-        char c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) || age.length() == 2) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtAgeKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSingUp;
     private javax.swing.JLabel idWarning;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPassword;

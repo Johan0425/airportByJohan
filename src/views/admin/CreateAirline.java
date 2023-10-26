@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Airline;
 import model.Employee;
+import model.Traveler;
 
 /**
  *
@@ -56,9 +57,26 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         String passwordAdmin = txtAdminPassword.getText();
         double salaryAdmin = Double.parseDouble(txtAdminSalary.getText());
 
+        Traveler traveler = controller.searchTraveler(adminId);
+        Employee admin = new Employee(emailAdmin, salaryAdmin, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
+        Airline airline = new Airline(airlineName, admin);
+
+        if (traveler != null) {
+            int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como viajero. "
+                    + "¿Desea registrarse como empleado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                controller.addTravelerAsAdminAirline(airline);
+                JOptionPane.showMessageDialog(null, "Registro exitoso");
+                view.fillTable();
+                this.dispose();
+                viewAdminTasks.openAirlinesView();
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo hacer");
+        }
+
         try {
-            Employee admin = new Employee(emailAdmin, salaryAdmin, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
-            Airline airline = new Airline(airlineName, admin);
             controller.addAirline(airline);
             JOptionPane.showMessageDialog(null, "Registro exitoso");
             view.fillTable();
@@ -72,23 +90,28 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     private void validateFields() {
         String airlineName = txtAirlineName.getText().trim();
         String adminId = txtAdminId.getText();
-        String adminUsername = txtAdminUsername.getText();
 
+        Traveler traveler = controller.searchTraveler(adminId);
         Airline airline = controller.searchAirline(airlineName);
         Employee employee = controller.searchEmployee(adminId);
 
-        boolean usernameInUse = controller.isUsernameInUse(adminUsername);
-
         boolean enableBtnAddAeroline;
+
+        if (!adminId.isEmpty() && traveler != null) {
+            lblEmployeeFound.setVisible(true);
+            fillFields(adminId);
+            noEditableFields();
+        } else {
+            lblEmployeeFound.setVisible(false);
+            editableFields();
+            cleanFillFields();
+        }
 
         if (!airlineName.isEmpty() && airline != null) {
             nameWarning.setVisible(true);
             enableBtnAddAeroline = false;
         } else if (!adminId.isEmpty() && employee != null) {
             idAdminWarning.setVisible(true);
-            enableBtnAddAeroline = false;
-        } else if (!adminUsername.isEmpty() && usernameInUse) {
-            usernameWarning.setVisible(true);
             enableBtnAddAeroline = false;
         } else {
             nameWarning.setVisible(false);
@@ -101,6 +124,53 @@ public class CreateAirline extends javax.swing.JInternalFrame {
 
     }
 
+    private void editableFields() {
+        txtAdminName.setEditable(true);
+        txtAdminUsername.setEditable(true);
+        txtAdminPassword.setEditable(true);
+    }
+
+    private void noEditableFields() {
+        txtAdminName.setEditable(false);
+        txtAdminUsername.setEditable(false);
+        txtAdminPassword.setEditable(false);
+    }
+
+    private void fillFields(String id) {
+        Traveler traveler = controller.searchTraveler(id);
+        if (traveler != null) {
+            txtAdminName.setText(traveler.getFullname());
+            txtAdminUsername.setText(traveler.getUsername());
+            txtAdminPassword.setText(traveler.getPassword());
+
+        }
+
+    }
+
+    private void cleanFillFields() {
+        txtAdminName.setText("");
+        txtAdminUsername.setText("");
+        txtAdminPassword.setText("");
+    }
+
+    private void validateUsername() {
+        String username = txtAdminUsername.getText();
+
+        boolean usernameInUse = controller.isUsernameInUse(username);
+
+        boolean enablebtnAddEmployee = true;
+
+        if (!username.isEmpty() && usernameInUse) {
+            usernameWarning.setVisible(true);
+            enablebtnAddEmployee = false;
+        } else {
+            usernameWarning.setVisible(false);
+
+        }
+        btnAddAirline.setEnabled(enablebtnAddEmployee);
+
+    }
+
     private boolean hasEmptyFields() {
         return (txtAirlineName.getText().isEmpty() || txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty()
                 || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty());
@@ -110,6 +180,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         nameWarning.setVisible(false);
         idAdminWarning.setVisible(false);
         usernameWarning.setVisible(false);
+        lblEmployeeFound.setVisible(false);
     }
 
     /**
@@ -148,6 +219,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         txtAirlineName = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         nameWarning = new javax.swing.JLabel();
+        lblEmployeeFound = new javax.swing.JLabel();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -268,6 +340,11 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         nameWarning.setForeground(new java.awt.Color(204, 0, 0));
         nameWarning.setText("NOMBRE EN USO");
 
+        lblEmployeeFound.setBackground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 10)); // NOI18N
+        lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setText("VIAJERO YA REGISTRADO");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -297,9 +374,11 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                                     .addComponent(idAdminWarning)
                                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel7)
-                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jSeparator1)
-                                            .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmployeeFound)
+                                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jSeparator1)
+                                                .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -366,7 +445,9 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(80, 80, 80)
+                .addGap(0, 0, 0)
+                .addComponent(lblEmployeeFound)
+                .addGap(67, 67, 67)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -451,7 +532,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtAdminSalaryKeyTyped
 
     private void txtAdminUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminUsernameKeyReleased
-        validateFields();
+        validateUsername();
     }//GEN-LAST:event_txtAdminUsernameKeyReleased
 
     private void txtAdminUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminUsernameKeyTyped
@@ -508,6 +589,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel nameWarning;
     private javax.swing.JTextField txtAdminEmail;

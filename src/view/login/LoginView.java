@@ -8,6 +8,7 @@ import view.main.MainView;
 import placeHolder.TextPrompt;
 
 import controllers.LoginController;
+import controllers.MultiUserController;
 import static enums.Role.AIRLINE_ADMIN;
 import static enums.Role.GENERAL_ADMIN;
 import static enums.Role.LOGISTICS_EMPLOYEE;
@@ -20,7 +21,6 @@ import model.Airline;
 import model.Employee;
 import model.User;
 import singleton.Singleton;
-import views.adminAirlines.AirlineAdminTasks;
 
 /**
  *
@@ -30,6 +30,7 @@ public class LoginView extends javax.swing.JInternalFrame {
 
     private final LoginController controller;
     private final MainView view;
+    private final MultiUserController controller2;
 
     /**
      * Creates new form LoginView
@@ -45,8 +46,14 @@ public class LoginView extends javax.swing.JInternalFrame {
         setResizable(false);
         setSize(1200, 750);
         controller = new LoginController();
+        controller2 = new MultiUserController();
         placeHolder();
         this.view = view;
+    }
+
+    private void cleanFields() {
+        txtUser.setText("");
+        txtPassword.setText("");
     }
 
     private void login() {
@@ -65,6 +72,22 @@ public class LoginView extends javax.swing.JInternalFrame {
             return;
         }
 
+        String id = user.getId();
+        if (id != null) {
+            boolean hasMultiUser = controller2.hasMultiUser(id);
+            if (hasMultiUser == true) {
+                view.validateDesktop();
+                view.openMultiUsersView(user);
+                return;
+            }
+        }
+
+        if (!view.getLabelUser().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Cierre primero la sesón antes de continuar");
+            cleanFields();
+            return;
+        }
+
         if (!hasEmptyFields()) {
 
             JOptionPane.showMessageDialog(null, "Bienvenido " + user.getFullname());
@@ -74,27 +97,38 @@ public class LoginView extends javax.swing.JInternalFrame {
 
                 case GENERAL_ADMIN:
                     view.openAdminTasks(user);
+                    view.validateBtnManagmentGeneralAdmin(user);
                     this.dispose();
                     break;
 
                 case TRAVELER:
                     view.validateDesktop();
-//                    view.openManagmentUser();
+                    JOptionPane.showMessageDialog(null, "Bienvenido viajero");
                     break;
 
                 case AIRLINE_ADMIN:
                     Airline airline = controller.searchAirline(user.getId());
                     view.openAirlineAdminTasks((Employee) user, airline);
+                    view.setLaberlAirline(airline.getName());
+                    JOptionPane.showMessageDialog(null, "Bienvenido admin general");
+                    view.validateBtnManagmentAirlineAdmin((Employee) user, airline);
                     this.dispose();
                     break;
 
                 case MAINTENANCE_MANAGER:
-                    System.out.println("Bienvenido gestor de manteniminto");
+                    view.validateDesktop();
+                    JOptionPane.showMessageDialog(null, "Bienvenido gestor de mantenimiento");
                     break;
 
                 case LOGISTICS_EMPLOYEE:
+                    view.validateDesktop();
                     Airline airline1 = controller.searchAirline(user.getId());
-                    System.out.println("Bienvenido empleado de logistica de " + airline1.getName());
+                    JOptionPane.showMessageDialog(null, "Bienvenido empleado de logística");
+                    break;
+
+                case FLIGHT_CAPTAIN:
+                    view.validateDesktop();
+                    JOptionPane.showMessageDialog(null, "Bienvenido capitán");
                     break;
 
                 default:
@@ -324,14 +358,19 @@ public class LoginView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        User user = Singleton.getINSTANCE().getUser();
-        String username = user.getUsername();
-        if (username != null) {
-            controller.logout(username);
-            view.setLabelUserName("");
-            JOptionPane.showMessageDialog(null, "Se cerró sesion correctamente");
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe iniciar sesión primero");
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+            String username = user.getUsername();
+            if (username != null) {
+                controller.logout(username);
+                view.setLabelUserName("");
+                view.setLaberlAirline("");
+                JOptionPane.showMessageDialog(null, "Se cerró sesion correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe iniciar sesión primero");
+            }
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, "Debe haber un usuario logueado para cerrar sesión");
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 

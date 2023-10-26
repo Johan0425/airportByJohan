@@ -10,6 +10,7 @@ import exceptions.UserAlreadyRegisteredException;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Employee;
+import model.Traveler;
 
 /**
  *
@@ -48,15 +49,31 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
             return;
         }
 
-        String adminId = txtAdminId.getText();
-        String adminName = txtAdminName.getText();
-        String emailAdmin = txtAdminEmail.getText();
-        String usernameAdmin = txtAdminUsername.getText();
-        String passwordAdmin = txtAdminPassword.getText();
-        double salaryAdmin = Double.parseDouble(txtAdminSalary.getText());
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        double salary = Double.parseDouble(txtSalary.getText());
+
+        Traveler traveler = controller.searchTraveler(id);
+        Employee admin = new Employee(email, salary, Role.MAINTENANCE_MANAGER, id, name, username, password);
+
+        if (traveler != null) {
+            int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como viajero. "
+                    + "¿Desea registrarse como empleado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                controller.addEmployeeAsTraveler(admin);
+                JOptionPane.showMessageDialog(null, "Registro exitoso");
+                viewMaintenanceManagers.fillTable();
+                cleanFields();
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo hacer");
+        }
 
         try {
-            Employee admin = new Employee(emailAdmin, salaryAdmin, Role.MAINTENANCE_MANAGER, adminId, adminName, usernameAdmin, passwordAdmin);
             controller.addEmployee(admin);
             JOptionPane.showMessageDialog(null, "Registro exitoso");
             viewMaintenanceManagers.fillTable();
@@ -67,33 +84,37 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
     }
 
     private void cleanFields() {
-        txtAdminId.setText("");
-        txtAdminName.setText("");
-        txtAdminEmail.setText("");
-        txtAdminUsername.setText("");
-        txtAdminPassword.setText("");
-        txtAdminSalary.setText("");
+        txtId.setText("");
+        txtName.setText("");
+        txtEmail.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
+        txtSalary.setText("");
     }
 
     private void validateFields() {
-        String adminId = txtAdminId.getText();
-        String adminUsername = txtAdminUsername.getText();
+        String id = txtId.getText();
 
-        Employee employee = controller.searchEmployee(adminId);
-
-        boolean usernameInUse = controller.isUsernameInUse(adminUsername);
+        Traveler traveler = controller.searchTraveler(id);
+        Employee employee = controller.searchEmployee(id);
 
         boolean enableBtnAddMaintenanceManager;
 
-        if (!adminId.isEmpty() && employee != null) {
+        if (!id.isEmpty() && traveler != null) {
+            lblEmployeeFound.setVisible(true);
+            fillFields(id);
+            noEditableFields();
+        } else {
+            lblEmployeeFound.setVisible(false);
+            editableFields();
+            cleanFillFields();
+        }
+
+        if (!id.isEmpty() && employee != null) {
             idAdminWarning.setVisible(true);
-            enableBtnAddMaintenanceManager = false;
-        } else if (!adminUsername.isEmpty() && usernameInUse) {
-            usernameWarning.setVisible(true);
             enableBtnAddMaintenanceManager = false;
         } else {
             idAdminWarning.setVisible(false);
-            usernameWarning.setVisible(false);
             enableBtnAddMaintenanceManager = true;
         }
 
@@ -101,14 +122,60 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
 
     }
 
+    private void validateUsername() {
+        String adminUsername = txtUsername.getText();
+        boolean usernameInUse = controller.isUsernameInUse(adminUsername);
+        boolean enableBtnAddMaintenanceManager = true;
+
+        if (!adminUsername.isEmpty() && usernameInUse) {
+            usernameWarning.setVisible(true);
+            enableBtnAddMaintenanceManager = false;
+        } else {
+            usernameWarning.setVisible(false);
+
+        }
+        btnAddManager.setEnabled(enableBtnAddMaintenanceManager);
+
+    }
+
+    private void editableFields() {
+        txtName.setEditable(true);
+        txtUsername.setEditable(true);
+        txtPassword.setEditable(true);
+    }
+
+    private void noEditableFields() {
+        txtName.setEditable(false);
+        txtUsername.setEditable(false);
+        txtPassword.setEditable(false);
+    }
+
+    private void fillFields(String id) {
+        Traveler traveler = controller.searchTraveler(id);
+        if (traveler != null) {
+            txtName.setText(traveler.getFullname());
+            txtUsername.setText(traveler.getUsername());
+            txtPassword.setText(traveler.getPassword());
+
+        }
+
+    }
+
+    private void cleanFillFields() {
+        txtName.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
+    }
+
     private boolean hasEmptyFields() {
-        return (txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty()
-                || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty());
+        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty()
+                || txtSalary.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty());
     }
 
     private void hideWarnings() {
         idAdminWarning.setVisible(false);
         usernameWarning.setVisible(false);
+        lblEmployeeFound.setVisible(false);
     }
 
     /**
@@ -124,25 +191,26 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         btnAddManager = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        txtAdminId = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtAdminName = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        txtAdminEmail = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        txtAdminSalary = new javax.swing.JTextField();
+        txtSalary = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        txtAdminUsername = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        txtAdminPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         idAdminWarning = new javax.swing.JLabel();
         usernameWarning = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
+        lblEmployeeFound = new javax.swing.JLabel();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -162,13 +230,13 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
         jLabel1.setText("ID:");
 
-        txtAdminId.setBorder(null);
-        txtAdminId.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtId.setBorder(null);
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtAdminIdKeyReleased(evt);
+                txtIdKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdminIdKeyTyped(evt);
+                txtIdKeyTyped(evt);
             }
         });
 
@@ -176,10 +244,10 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 102, 153));
         jLabel2.setText("Nombre:");
 
-        txtAdminName.setBorder(null);
-        txtAdminName.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtName.setBorder(null);
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdminNameKeyTyped(evt);
+                txtNameKeyTyped(evt);
             }
         });
 
@@ -187,16 +255,16 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(0, 102, 153));
         jLabel3.setText("Email:");
 
-        txtAdminEmail.setBorder(null);
+        txtEmail.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 153));
         jLabel4.setText("Salario:");
 
-        txtAdminSalary.setBorder(null);
-        txtAdminSalary.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSalary.setBorder(null);
+        txtSalary.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdminSalaryKeyTyped(evt);
+                txtSalaryKeyTyped(evt);
             }
         });
 
@@ -204,13 +272,13 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(0, 102, 153));
         jLabel5.setText("Usuario:");
 
-        txtAdminUsername.setBorder(null);
-        txtAdminUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtUsername.setBorder(null);
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtAdminUsernameKeyReleased(evt);
+                txtUsernameKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdminUsernameKeyTyped(evt);
+                txtUsernameKeyTyped(evt);
             }
         });
 
@@ -218,10 +286,10 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(0, 102, 153));
         jLabel6.setText("Contraseña:");
 
-        txtAdminPassword.setBorder(null);
-        txtAdminPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdminPasswordKeyTyped(evt);
+                txtPasswordKeyTyped(evt);
             }
         });
 
@@ -245,6 +313,11 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
             }
         });
 
+        lblEmployeeFound.setBackground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 10)); // NOI18N
+        lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
+        lblEmployeeFound.setText("VIAJERO YA REGISTRADO");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -263,7 +336,7 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSeparator3)
-                                    .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
@@ -271,7 +344,8 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                                     .addComponent(idAdminWarning)
                                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator1)
-                                        .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblEmployeeFound)))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -279,7 +353,7 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                                     .addComponent(usernameWarning)
                                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator5)
-                                        .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(112, 112, 112)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
@@ -287,19 +361,19 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSeparator4)
-                                    .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSeparator6)
-                                    .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSeparator2)
-                                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(489, 489, 489)
                         .addComponent(btnAddManager, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -317,27 +391,29 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(100, 100, 100)
+                .addGap(0, 0, 0)
+                .addComponent(lblEmployeeFound)
+                .addGap(87, 87, 87)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(100, 100, 100)
@@ -347,13 +423,13 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(100, 100, 100)
@@ -379,56 +455,56 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         addMaintenanceManager();
     }//GEN-LAST:event_btnAddManagerActionPerformed
 
-    private void txtAdminIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminIdKeyReleased
+    private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
         validateFields();
-    }//GEN-LAST:event_txtAdminIdKeyReleased
+    }//GEN-LAST:event_txtIdKeyReleased
 
-    private void txtAdminIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminIdKeyTyped
-        String id = txtAdminId.getText();
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        String id = txtId.getText();
         char c = evt.getKeyChar();
 
         if (!Character.isDigit(c) || id.length() == 10) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtAdminIdKeyTyped
+    }//GEN-LAST:event_txtIdKeyTyped
 
-    private void txtAdminNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminNameKeyTyped
-        String name = txtAdminName.getText();
+    private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        String name = txtName.getText();
         char c = evt.getKeyChar();
 
         if (Character.isDigit(c) || name.length() == 50) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtAdminNameKeyTyped
+    }//GEN-LAST:event_txtNameKeyTyped
 
-    private void txtAdminSalaryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminSalaryKeyTyped
-        String salary = txtAdminSalary.getText();
+    private void txtSalaryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalaryKeyTyped
+        String salary = txtSalary.getText();
         char c = evt.getKeyChar();
 
         if (!Character.isDigit(c) || salary.length() == 15) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtAdminSalaryKeyTyped
+    }//GEN-LAST:event_txtSalaryKeyTyped
 
-    private void txtAdminUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminUsernameKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtAdminUsernameKeyReleased
+    private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        validateUsername();
+    }//GEN-LAST:event_txtUsernameKeyReleased
 
-    private void txtAdminUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminUsernameKeyTyped
-        String username = txtAdminUsername.getText().trim();
+    private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        String username = txtUsername.getText().trim();
         char c = evt.getKeyChar();
         if (!Character.isLetterOrDigit(c) || username.length() == 20) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtAdminUsernameKeyTyped
+    }//GEN-LAST:event_txtUsernameKeyTyped
 
-    private void txtAdminPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdminPasswordKeyTyped
-        String pass = txtAdminPassword.getText().trim();
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        String pass = txtPassword.getText().trim();
         char c = evt.getKeyChar();
         if (!Character.isLetterOrDigit(c) || pass.length() == 20) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtAdminPasswordKeyTyped
+    }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         viewAdminTasks.validateDesktop();
@@ -452,13 +528,14 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JTextField txtAdminEmail;
-    private javax.swing.JTextField txtAdminId;
-    private javax.swing.JTextField txtAdminName;
-    private javax.swing.JTextField txtAdminPassword;
-    private javax.swing.JTextField txtAdminSalary;
-    private javax.swing.JTextField txtAdminUsername;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtSalary;
+    private javax.swing.JTextField txtUsername;
     private javax.swing.JLabel usernameWarning;
     // End of variables declaration//GEN-END:variables
 }

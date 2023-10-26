@@ -26,6 +26,14 @@ public class AirlineEmployeeController extends EmployeesController {
         return airline.getEmployees();
     }
 
+    public void addTravelerAsEmployee(Employee employee) {
+        airline.addTravelerAsEmployee(employee);
+        users.addDato(employee);
+        Singleton.getINSTANCE().writeAirline();
+        Singleton.getINSTANCE().writeUser();
+
+    }
+    
     @Override
     public void addEmployee(Employee employee) {
         airline.addEmployee(employee);
@@ -51,7 +59,7 @@ public class AirlineEmployeeController extends EmployeesController {
     }
 
     public Employee deleteEmployee(String id) {
-        deleteEmployeeFromSingleton(id);   
+        deleteEmployeeFromSingleton(id);
         Singleton.getINSTANCE().writeAirline();
         return airline.deleteEmployee(id);
     }

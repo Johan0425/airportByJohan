@@ -4,7 +4,17 @@
  */
 package views.adminAirlines;
 
+import controllers.AirlineEmployeeController;
+import enums.Role;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Airline;
+import model.Employee;
+import util.LSE;
 
 /**
  *
@@ -13,15 +23,68 @@ import model.Airline;
 public class AirlineEmployees extends javax.swing.JInternalFrame {
 
     private final Airline airline;
+    private final AirlineEmployeeController controller;
+
+    private TableRowSorter<DefaultTableModel> sorter;
+    private final AirlineAdminTasks view;
 
     /**
      * Creates new form AirlineEmployees
      *
      * @param airline
+     * @param view
      */
-    public AirlineEmployees(Airline airline) {
+    public AirlineEmployees(Airline airline, AirlineAdminTasks view) {
         initComponents();
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
+        setSize(1200, 700);
         this.airline = airline;
+        this.controller = new AirlineEmployeeController(airline);
+        this.view = view;
+        fillTable();
+    }
+
+    private boolean hasEmptySearchField() {
+        return (txtSearch.getText().isEmpty());
+    }
+
+    private void filter() {
+        String filterText = txtSearch.getText();
+
+        RowFilter<Object, Object> idFilter = RowFilter.regexFilter(filterText.trim(), 0);
+
+        sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(idFilter, idFilter)));
+    }
+
+    public final void fillTable() {
+        DefaultTableModel model = new DefaultTableModel();
+
+        LSE<Employee> employees = controller.getEmployees();
+        model.setColumnIdentifiers(new Object[]{
+            "ID", "Nombre", "Salario", "Email", "Rol", "Usuario", "Contraseña"
+        });
+
+        employeesTable.setModel(model);
+
+        employeesTable.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(model);
+        employeesTable.setRowSorter(sorter);
+
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getRole() != Role.AIRLINE_ADMIN) {
+                model.addRow(new Object[]{
+                    employees.get(i).getId(),
+                    employees.get(i).getFullname(),
+                    employees.get(i).getSalary(),
+                    employees.get(i).getEmail(),
+                    employees.get(i).getRole() == Role.LOGISTICS_EMPLOYEE ? "Logistica" : "Capitan de vuelo",
+                    employees.get(i).getUsername(),
+                    employees.get(i).getPassword()
+                });
+            }
+        }
     }
 
     /**
@@ -34,6 +97,16 @@ public class AirlineEmployees extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        employeesTable = new javax.swing.JTable();
+        btnAddEmployee = new javax.swing.JButton();
+        btnUpdateEmployee = new javax.swing.JButton();
+        btnSearchEmployee = new javax.swing.JButton();
+        btnDeleteEmployee = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -46,26 +119,238 @@ public class AirlineEmployees extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 153));
+        jLabel1.setText("BUSCAR:");
+
+        txtSearch.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        txtSearch.setBorder(null);
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+
+        jSeparator1.setBackground(new java.awt.Color(0, 102, 153));
+        jSeparator1.setForeground(new java.awt.Color(0, 102, 153));
+
+        employeesTable.setBackground(new java.awt.Color(255, 255, 255));
+        employeesTable.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        employeesTable.setForeground(new java.awt.Color(0, 102, 153));
+        employeesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(employeesTable);
+
+        btnAddEmployee.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnAddEmployee.setForeground(new java.awt.Color(0, 102, 153));
+        btnAddEmployee.setText("NUEVO");
+        btnAddEmployee.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 153), 2, true));
+        btnAddEmployee.setContentAreaFilled(false);
+        btnAddEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnUpdateEmployee.setBackground(new java.awt.Color(255, 255, 255));
+        btnUpdateEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnUpdateEmployee.setForeground(new java.awt.Color(0, 102, 153));
+        btnUpdateEmployee.setText("GESTIONAR");
+        btnUpdateEmployee.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 153), 2, true));
+        btnUpdateEmployee.setContentAreaFilled(false);
+        btnUpdateEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnSearchEmployee.setBackground(new java.awt.Color(255, 255, 255));
+        btnSearchEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnSearchEmployee.setForeground(new java.awt.Color(0, 102, 153));
+        btnSearchEmployee.setText("BUSCAR");
+        btnSearchEmployee.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 153), 2, true));
+        btnSearchEmployee.setContentAreaFilled(false);
+        btnSearchEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnDeleteEmployee.setBackground(new java.awt.Color(255, 255, 255));
+        btnDeleteEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnDeleteEmployee.setForeground(new java.awt.Color(0, 102, 153));
+        btnDeleteEmployee.setText("ELIMINAR");
+        btnDeleteEmployee.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 153), 2, true));
+        btnDeleteEmployee.setContentAreaFilled(false);
+        btnDeleteEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteEmployeeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115)
+                        .addComponent(btnDeleteEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115)
+                        .addComponent(btnSearchEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(jLabel1)
+                        .addGap(66, 66, 66)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator1)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(89, Short.MAX_VALUE))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 294, Short.MAX_VALUE))
+                .addGap(0, 1088, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 174, Short.MAX_VALUE))
+                .addGap(0, 614, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        filter();
+    }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
+        view.validateDesktop();
+        view.openRegisterEmployeeView(airline, this);
+    }//GEN-LAST:event_btnAddEmployeeActionPerformed
+
+    private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
+        int selected = employeesTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            String id = employeesTable.getModel().getValueAt(selected, 0).toString();
+            Employee employee = controller.searchEmployee(id);
+
+            if (employee != null) {
+                view.validateDesktop();
+                view.openUpdatedEmployeeView(employee, airline, this);
+            } else {
+                System.out.println("es null");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un empleado de la tabla");
+        }
+    }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
+
+    private void btnSearchEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmployeeActionPerformed
+        if (hasEmptySearchField()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un nombre a la hora de buscar");
+            return;
+        }
+        String name = txtSearch.getText();
+
+        Employee employee = controller.searchEmployee(name);
+
+        if (airline != null) {
+            JOptionPane.showMessageDialog(null, "Se econtrolo al empleado de rol " + employee.getRole() + " con nombre "
+                    + employee.getFullname() + " con correo de contacto " + employee.getEmail() + " con un salario de " + employee.getSalary()
+                    + "usd.");
+        }
+    }//GEN-LAST:event_btnSearchEmployeeActionPerformed
+
+    private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
+        int selected = employeesTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            String id = employeesTable.getModel().getValueAt(selected, 0).toString();
+
+            int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el empleado con cédula "
+                    + id + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (answer == 0) {
+                controller.deleteEmployee(id);
+                fillTable();
+                JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un empleado de la tabla");
+        }
+    }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddEmployee;
+    private javax.swing.JButton btnDeleteEmployee;
+    private javax.swing.JButton btnSearchEmployee;
+    private javax.swing.JButton btnUpdateEmployee;
+    private javax.swing.JTable employeesTable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

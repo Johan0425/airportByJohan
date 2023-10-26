@@ -15,11 +15,9 @@ public class Traveler extends User {
 
     private final LSE<FlightReservation> reservations;
     private final LSE<Flight> travelHistory;
-    private final int age;
 
-    public Traveler(int age, String id, String fullname, String username, String password) {
+    public Traveler(String id, String fullname, String username, String password) {
         super(Role.TRAVELER, id, fullname, username, password);
-        this.age = age;
         reservations = new LSE<>();
         travelHistory = new LSE<>();
     }
@@ -30,10 +28,6 @@ public class Traveler extends User {
 
     public LSE<Flight> getTravelHistory() {
         return travelHistory;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     public void bookFlight(FlightReservation flightReservation) {
