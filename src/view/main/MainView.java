@@ -5,7 +5,14 @@
 package view.main;
 
 import controllers.LoginController;
-import java.awt.Color;
+import controllers.TravelerController;
+import enums.Role;
+import static enums.Role.AIRLINE_ADMIN;
+import static enums.Role.FLIGHT_CAPTAIN;
+import static enums.Role.GENERAL_ADMIN;
+import static enums.Role.LOGISTICS_EMPLOYEE;
+import static enums.Role.MAINTENANCE_MANAGER;
+import static enums.Role.TRAVELER;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -13,18 +20,25 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Airline;
 import model.Employee;
+import model.Traveler;
 import model.User;
 import singleton.Singleton;
+import util.LSE;
+import view.login.HasMultiUserView;
 import view.login.LoginView;
 import views.admin.AdminTasks;
 import views.adminAirlines.AirlineAdminTasks;
 import views.traveler.RegisterView;
+import views.traveler.UpdateManagmentUserTraveler;
 
 /**
  *
  * @author joanp
  */
 public class MainView extends javax.swing.JFrame {
+
+    private final TravelerController controller;
+    private final LoginController controller2;
 
     /**
      * Creates new form MainView
@@ -37,8 +51,72 @@ public class MainView extends javax.swing.JFrame {
         setTitle("Vista principal del aeropuerto");
         setLocationRelativeTo(null);
         setResizable(false);
+        controller = new TravelerController();
+        controller2 = new LoginController();
         hidePanelMenu();
-        setLaberlUserNameLogged();
+        validateButton();
+
+        addAdmin();
+//        setLaberlUserNameLogged();
+    }
+
+    private void validateButton() {
+        if (lblUserName.getText().isEmpty()) {
+            btnManagments.setVisible(false);
+        }
+    }
+
+    public void validateBtnManagmentAirlineAdmin(Employee employee, Airline airline) {
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+
+            switch (user.getRole()) {
+                case AIRLINE_ADMIN -> {
+                    openAirlineAdminTasks(employee, airline);
+                    btnManagments.setVisible(true);
+                }
+                default ->
+                    JOptionPane.showMessageDialog(null, "No se pudo validar");
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public void validateBtnManagmentGeneralAdmin(User user1) {
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+
+            switch (user.getRole()) {
+                case GENERAL_ADMIN -> {
+                    openAdminTasks(user1);
+                    btnManagments.setVisible(true);
+                }
+
+                default ->
+                    JOptionPane.showMessageDialog(null, "No se pudo validar");
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    private void addAdmin() {
+        LSE<User> users = Singleton.getINSTANCE().getUsers();
+        User GeneralAdmin = new User(Role.GENERAL_ADMIN, "0", "administrador", "admin", "123");
+        users.addDato(GeneralAdmin);
+        Singleton.getINSTANCE().writeUser();
+
+    }
+
+    public void setLaberlAirline(String airline) {
+        lblAirlineName.setText(airline);
+    }
+
+    public String getLabelUser() {
+        return lblUserName.getText();
     }
 
     private void setLaberlUserNameLogged() {
@@ -65,6 +143,18 @@ public class MainView extends javax.swing.JFrame {
             dsMain.getComponent(0).setVisible(false);
             dsMain.remove(0);
         }
+    }
+
+    public void openMultiUsersView(User user) {
+        HasMultiUserView view = new HasMultiUserView(user, this);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openUpdatedTravelerInformation(Traveler traveler) {
+        UpdateManagmentUserTraveler view = new UpdateManagmentUserTraveler(traveler, this);
+        dsMain.add(view);
+        view.setVisible(true);
     }
 
     public void openAirlineAdminTasks(Employee employee, Airline airline) {
@@ -123,7 +213,7 @@ public class MainView extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         btnAirlines = new javax.swing.JButton();
-        btnAirlines1 = new javax.swing.JButton();
+        btnManagments = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +241,11 @@ public class MainView extends javax.swing.JFrame {
 
         btnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/gear.png"))); // NOI18N
         btnSettings.setContentAreaFilled(false);
+        btnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSettingsMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -250,16 +345,16 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        btnAirlines1.setBackground(new java.awt.Color(255, 255, 255));
-        btnAirlines1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        btnAirlines1.setForeground(new java.awt.Color(0, 0, 0));
-        btnAirlines1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/air-transport.png"))); // NOI18N
-        btnAirlines1.setText("   AEROLINEAS");
-        btnAirlines1.setBorder(null);
-        btnAirlines1.setContentAreaFilled(false);
-        btnAirlines1.addActionListener(new java.awt.event.ActionListener() {
+        btnManagments.setBackground(new java.awt.Color(255, 255, 255));
+        btnManagments.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        btnManagments.setForeground(new java.awt.Color(0, 0, 0));
+        btnManagments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/flight.png"))); // NOI18N
+        btnManagments.setText("    GESTIONES");
+        btnManagments.setBorder(null);
+        btnManagments.setContentAreaFilled(false);
+        btnManagments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAirlines1ActionPerformed(evt);
+                btnManagmentsActionPerformed(evt);
             }
         });
 
@@ -273,7 +368,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAirlines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAirlines1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                    .addComponent(btnManagments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelMenuLayout.setVerticalGroup(
@@ -285,7 +380,7 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAirlines, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAirlines1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManagments, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 717, Short.MAX_VALUE))
         );
 
@@ -348,16 +443,78 @@ public class MainView extends javax.swing.JFrame {
         openRegisterView();
     }//GEN-LAST:event_btnAirlinesActionPerformed
 
-    private void btnAirlines1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlines1ActionPerformed
+    private void btnManagmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagmentsActionPerformed
+        try {
+            User user = Singleton.getINSTANCE().getUser();
 
-    }//GEN-LAST:event_btnAirlines1ActionPerformed
+            switch (user.getRole()) {
+                case AIRLINE_ADMIN:
+                    Airline airline = controller2.searchAirline(user.getId());
+                    openAirlineAdminTasks((Employee) user, airline);
+                    break;
+                case FLIGHT_CAPTAIN:
+
+                    break;
+                case GENERAL_ADMIN:
+                    openAdminTasks(user);
+                    break;
+                case LOGISTICS_EMPLOYEE:
+
+                    break;
+                case MAINTENANCE_MANAGER:
+
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "No puede acceder");
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnManagmentsActionPerformed
+
+    private void btnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSettingsMouseClicked
+
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+            String id = user.getId();
+            Traveler traveler = controller.searchTraveler(id);
+            Employee employee = controller.searchEmployee(id);
+
+            switch (user.getRole()) {
+                case TRAVELER:
+                    openUpdatedTravelerInformation(traveler);
+                    break;
+                case AIRLINE_ADMIN:
+
+                    break;
+                case FLIGHT_CAPTAIN:
+
+                    break;
+                case GENERAL_ADMIN:
+
+                    break;
+                case LOGISTICS_EMPLOYEE:
+
+                    break;
+                case MAINTENANCE_MANAGER:
+
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "No puede modificar su información");
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSettingsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAirlines;
-    private javax.swing.JButton btnAirlines1;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnManagments;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSettings;
     private javax.swing.JDesktopPane dsMain;

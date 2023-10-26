@@ -190,6 +190,9 @@
                 </Property>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSettingsMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -228,7 +231,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnLogin" max="32767" attributes="0"/>
                           <Component id="btnAirlines" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnAirlines1" alignment="1" pref="236" max="32767" attributes="0"/>
+                          <Component id="btnManagments" alignment="1" pref="236" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -243,7 +246,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnAirlines" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnAirlines1" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="btnManagments" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="717" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -322,7 +325,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAirlinesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAirlines1">
+            <Component class="javax.swing.JButton" name="btnManagments">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -334,16 +337,16 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icon/air-transport.png"/>
+                  <Image iconType="3" name="/icon/flight.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="   AEROLINEAS"/>
+                <Property name="text" type="java.lang.String" value="    GESTIONES"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAirlines1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManagmentsActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

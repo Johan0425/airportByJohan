@@ -12,7 +12,7 @@ import view.main.MainView;
  */
 public class Airport {
 
-
+       
     /**
      * @param args the command line arguments
      */

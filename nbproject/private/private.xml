@@ -8,15 +8,22 @@
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/CreateAirline.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/AdminTasks.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/model/Traveler.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/UpdatedAirplane.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/AirlineEmployees.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/UpdateAirplane.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/singleton/Singleton.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/model/Airline.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/HistoryAirplanes.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/controllers/MultiUserController.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/Airlines.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/view/login/HasMultiUserView.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/Airplanes.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/controllers/LoginController.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/RegisterAdminAirline.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/enums/Role.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/MaintenanceManagers.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/model/Employee.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/traveler/UpdateManagmentUserTraveler.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/model/Flight.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/RegisterEmployee.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/controllers/BaseController.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/controllers/EmployeesController.java</file>
@@ -28,6 +35,7 @@
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/traveler/RegisterView.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/adminAirlines/AirlineAdminTasks.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/util/Stack.java</file>
+            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/exceptions/UserAlreadyRegisteredException.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/AdminsAirline.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/model/User.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/airport/src/views/admin/UpdateMaintenanceManager.java</file>

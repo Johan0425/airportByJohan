@@ -57,4 +57,8 @@ public class LoginController {
         return null;
     }
 
+    public User getUser() {
+        return Singleton.getINSTANCE().getUser();
+    }
+
 }

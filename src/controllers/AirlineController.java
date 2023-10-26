@@ -36,6 +36,17 @@ public class AirlineController extends BaseController {
         return null;
     }
 
+    public void addTravelerAsAdminAirline(Airline airline) {
+        Airline aux = searchAirline(airline.getName());
+        if (aux == null) {
+            airlines.addDato(airline);
+            users.addDato(airline.getAdmin());
+            airline.getEmployees().addDato(airline.getAdmin());
+            Singleton.getINSTANCE().writeAirline();
+            Singleton.getINSTANCE().writeUser();
+        }
+    }
+
     public void addAirline(Airline airline) {
         Airline aux = searchAirline(airline.getName());
         if (aux == null) {
@@ -71,13 +82,13 @@ public class AirlineController extends BaseController {
         for (int i = 0; i < airlines.size(); i++) {
             if (airlines.get(i).getName().equals(name)) {
                 Airline aux = airlines.get(i);
-                
+
                 for (int j = 0; j < aux.getEmployees().size(); j++) {
                     deleteEmployeeFromSingleton(aux.getEmployees().get(j).getId());
                 }
-                
+
                 airlines.remove(i);
-                
+
                 Singleton.getINSTANCE().writeAirline();
                 return aux;
             }

@@ -342,27 +342,31 @@ public class AdminsAirline extends javax.swing.JInternalFrame {
 
     private void btnAddAdminAirlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminAirlineActionPerformed
         view2.validateDesktop();
-        view2.openRegisterAdminAirlinesView(airline, this);
+        view2.openRegisterAdminAirlinesView(airline, view, this);
     }//GEN-LAST:event_btnAddAdminAirlineActionPerformed
 
     private void btnDeleteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAdminActionPerformed
         int selected = airlineAdminsTable.getSelectedRow();
 
         if (selected >= 0) {
+            if (airlineAdminsTable.getRowCount() > 1) {
+                String id = airlineAdminsTable.getModel().getValueAt(selected, 0).toString();
 
-            String id = airlineAdminsTable.getModel().getValueAt(selected, 0).toString();
+                int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el admin con cédula "
+                        + id + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-            int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el admin con cédula "
-                    + id + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-            if (answer == 0) {
-                controller2.deleteEmployee(id);
-                fillTable();
-                JOptionPane.showMessageDialog(null, "Admin eliminado correctamente");
+                if (answer == 0) {
+                    controller2.deleteEmployee(id);
+                    fillTable();
+                    JOptionPane.showMessageDialog(null, "Admin eliminado correctamente");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe haber al menos un admin en la tabla.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un admin de la tabla");
         }
+
     }//GEN-LAST:event_btnDeleteAdminActionPerformed
 
     private void btnUpdatedNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatedNameActionPerformed

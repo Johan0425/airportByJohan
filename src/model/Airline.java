@@ -67,6 +67,13 @@ public class Airline implements Serializable {
         return null;
     }
 
+    public void addTravelerAsEmployee(Employee employee) {
+        Employee aux = searchEmployee(employee.getId());
+        if (aux == null) {
+            employees.addDato(employee);
+        }
+    }
+
     public void addEmployee(Employee employee) {
         Employee aux = searchEmployee(employee.getId());
         if (aux == null) {
@@ -99,7 +106,7 @@ public class Airline implements Serializable {
             aux.setPassword(employee.getPassword());
             wasEdited = true;
         }
-        
+
         return wasEdited;
     }
 
@@ -113,7 +120,7 @@ public class Airline implements Serializable {
         }
         return null;
     }
-    
+
     public Airplane searchAirplane(String model) {
         for (int i = 0; i < airplanes.size(); i++) {
             if (airplanes.get(i).getModel().equals(model)) {
@@ -122,39 +129,39 @@ public class Airline implements Serializable {
         }
         return null;
     }
-    
+
     public void addAirplane(Airplane airplane) {
         airplanes.addDato(airplane);
     }
-    
+
     public boolean updateAirplane(Airplane airplane) {
         Airplane aux = searchAirplane(airplane.getModel());
         boolean wasEdited = false;
-        
+
         if (aux.getNumRows() != airplane.getNumRows()) {
             aux.setNumRows(airplane.getNumRows());
             wasEdited = true;
         }
-        
+
         if (aux.getNumCols() != airplane.getNumCols()) {
             aux.setNumCols(airplane.getNumCols());
             wasEdited = true;
         }
-        
+
         if (aux.getStatus() != airplane.getStatus()) {
             aux.setStatus(airplane.getStatus());
             wasEdited = true;
         }
-        
+
         if (!aux.getModel().equals(airplane.getModel())) {
             aux.setModel(airplane.getModel());
             wasEdited = true;
         }
-        
+
         Singleton.getINSTANCE().writeAirline();
         return wasEdited;
     }
-    
+
     public Airplane deleteAirplane(String model) {
         for (int i = 0; i < airplanes.size(); i++) {
             Airplane aux = airplanes.get(i);

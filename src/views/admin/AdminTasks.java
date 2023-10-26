@@ -54,8 +54,8 @@ public class AdminTasks extends javax.swing.JInternalFrame {
         view.setVisible(true);
     }
 
-    public void openRegisterAdminAirlinesView(Airline airline, AdminsAirline viewAdminsAirline) {
-        RegisterAdminAirline view = new RegisterAdminAirline(airline, viewAdminsAirline);
+    public void openRegisterAdminAirlinesView(Airline airline, Airlines airlinesView, AdminsAirline viewAdminsAirline) {
+        RegisterAdminAirline view = new RegisterAdminAirline(airline, airlinesView, viewAdminsAirline, this);
         dsMain.add(view);
         view.setVisible(true);
     }

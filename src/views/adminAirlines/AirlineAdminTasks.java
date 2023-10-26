@@ -48,6 +48,18 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
         }
     }
 
+    public void openUpdatedEmployeeView(Employee employee, Airline airline, AirlineEmployees view2) {
+        UpdateAirlineEmployee view = new UpdateAirlineEmployee(employee, airline, view2);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openRegisterEmployeeView(Airline airline, AirlineEmployees view2) {
+        RegisterEmployee view = new RegisterEmployee(airline, view2);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
     public void openUpdateAirplaneView(Airline airline, Airplane airplane, Airplanes viewAirplanes) {
         UpdateAirplane view = new UpdateAirplane(airline, airplane, viewAirplanes);
         dsMain.add(view);
@@ -61,7 +73,7 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
     }
 
     public void openAirlineEmployeesView() {
-        AirlineEmployees view = new AirlineEmployees(airline);
+        AirlineEmployees view = new AirlineEmployees(airline, this);
         dsMain.add(view);
         view.setVisible(true);
     }

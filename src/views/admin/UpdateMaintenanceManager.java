@@ -80,14 +80,14 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         usernameWarning.setVisible(false);
     }
 
-    private void showEmployeeData() {
-        txtAdminId.setText(employee.getId());
-        txtAdminName.setText(employee.getFullname());
-        txtAdminEmail.setText(employee.getEmail());
-        txtAdminUsername.setText(employee.getUsername());
-        txtAdminPassword.setText(employee.getPassword());
-        txtAdminSalary.setText(String.valueOf(employee.getSalary()));
-    }
+private void showEmployeeData() {
+    txtAdminId.setText(employee.getId());
+    txtAdminName.setText(employee.getFullname());
+    txtAdminEmail.setText(employee.getEmail());
+    txtAdminUsername.setText(employee.getUsername());
+    txtAdminPassword.setText(employee.getPassword());
+    txtAdminSalary.setText(String.valueOf(employee.getSalary()));
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
