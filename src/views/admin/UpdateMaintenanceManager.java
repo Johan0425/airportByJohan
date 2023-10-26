@@ -36,15 +36,15 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         setTitle("Actualización de datos - " + employee.getFullname());
         setResizable(false);
         setSize(1200, 700);
-        hideWarnings();
-        showEmployeeData();
         controller = new EmployeesController();
         this.employee = employee;
         this.view = view;
         this.viewAdmin = viewAdmin;
+        hideWarnings();
+        showEmployeeData();
     }
-    
-     private void validateFields() {
+
+    private void validateFields() {
         String adminId = txtAdminId.getText();
         String adminUsername = txtAdminUsername.getText();
 
@@ -80,14 +80,14 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         usernameWarning.setVisible(false);
     }
 
-private void showEmployeeData() {
-    txtAdminId.setText(employee.getId());
-    txtAdminName.setText(employee.getFullname());
-    txtAdminEmail.setText(employee.getEmail());
-    txtAdminUsername.setText(employee.getUsername());
-    txtAdminPassword.setText(employee.getPassword());
-    txtAdminSalary.setText(String.valueOf(employee.getSalary()));
-}
+    private void showEmployeeData() {
+        txtAdminId.setText(employee.getId());
+        txtAdminName.setText(employee.getFullname());
+        txtAdminEmail.setText(employee.getEmail());
+        txtAdminUsername.setText(employee.getUsername());
+        txtAdminPassword.setText(employee.getPassword());
+        txtAdminSalary.setText(String.valueOf(employee.getSalary()));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -355,7 +355,7 @@ private void showEmployeeData() {
 
     private void btnUpdateAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAdminActionPerformed
         if (hasEmptyFields()) {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los datos del admin");
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos del gestor de mantenimiento");
             return;
         }
 
