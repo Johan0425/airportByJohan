@@ -37,11 +37,11 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         setResizable(false);
         setSize(1200, 700);
         hideWarnings();
-        showEmployeeData();
         controller = new EmployeesController();
         this.employee = employee;
         this.view = view;
         this.viewAdmin = viewAdmin;
+        showEmployeeData();
     }
     
      private void validateFields() {

@@ -59,6 +59,7 @@ public class AirlineEmployeeController extends EmployeesController {
     }
 
     public Employee deleteEmployee(String id) {
+        airline.deleteEmployee(id);
         deleteEmployeeFromSingleton(id);
         Singleton.getINSTANCE().writeAirline();
         return airline.deleteEmployee(id);

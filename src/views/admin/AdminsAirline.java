@@ -228,39 +228,41 @@ public class AdminsAirline extends javax.swing.JInternalFrame {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(242, 242, 242)
+                        .addGap(65, 65, 65)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameWarning)
-                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtAirlineName)
-                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(31, 31, 31)
-                .addComponent(btnUpdatedName, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(439, Short.MAX_VALUE))
+                            .addComponent(jLabel7)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(242, 242, 242)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameWarning)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtAirlineName)
+                                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(31, 31, 31)
+                        .addComponent(btnUpdatedName, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(291, 291, 291)
+                        .addComponent(btnAddAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(148, 148, 148)
+                        .addComponent(btnUpdateAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(145, 145, 145)
+                        .addComponent(btnDeleteAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(178, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 825, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(btnAddAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(143, 143, 143)
-                        .addComponent(btnUpdateAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(143, 143, 143)
-                        .addComponent(btnDeleteAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
                         .addComponent(jLabel8)
                         .addGap(61, 61, 61)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator8)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(119, 119, 119))
+                        .addGap(295, 295, 295))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 825, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,12 +286,12 @@ public class AdminsAirline extends javax.swing.JInternalFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdateAdminAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79))
+                .addGap(128, 128, 128))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -324,20 +326,22 @@ public class AdminsAirline extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnUpdateAdminAirlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAdminAirlineActionPerformed
-        if (txtAirlineName.getText().isEmpty() || txtAirlineName.getText().equals(airline.getName())) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre nuevo");
-            return;
+        int selected = airlineAdminsTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            String id = airlineAdminsTable.getModel().getValueAt(selected, 0).toString();
+            Employee admin = controller2.searchEmployee(id);
+
+            if (admin != null) {
+                view2.validateDesktop();
+                view2.openUpdateAdminAirline(admin, this, airline);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un admin de la tabla");
         }
 
-        String name = txtAirlineName.getText();
-        Airline newAirline = new Airline(name, airline.getAdmin());
-
-        boolean success = controller1.updateAirline(newAirline, airline.getName());
-
-        if (success) {
-            JOptionPane.showMessageDialog(null, "Nombre actualizado correctamente");
-            view.fillTable();
-        }
     }//GEN-LAST:event_btnUpdateAdminAirlineActionPerformed
 
     private void btnAddAdminAirlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAdminAirlineActionPerformed
@@ -370,20 +374,19 @@ public class AdminsAirline extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteAdminActionPerformed
 
     private void btnUpdatedNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatedNameActionPerformed
-        int selected = airlineAdminsTable.getSelectedRow();
+        if (txtAirlineName.getText().isEmpty() || txtAirlineName.getText().equals(airline.getName())) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre nuevo");
+            return;
+        }
 
-        if (selected >= 0) {
+        String name = txtAirlineName.getText();
+        Airline newAirline = new Airline(name, airline.getAdmin());
 
-            String id = airlineAdminsTable.getModel().getValueAt(selected, 0).toString();
-            Employee admin = controller2.searchEmployee(id);
+        boolean success = controller1.updateAirline(newAirline, airline.getName());
 
-            if (admin != null) {
-                view2.validateDesktop();
-                view2.openUpdateAdminAirline(admin, this, airline);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un admin de la tabla");
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Nombre actualizado correctamente");
+            view.fillTable();
         }
     }//GEN-LAST:event_btnUpdatedNameActionPerformed
 
