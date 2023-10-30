@@ -36,18 +36,12 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         setTitle("Actualización de datos - " + employee.getFullname());
         setResizable(false);
         setSize(1200, 700);
-<<<<<<< HEAD
-=======
         hideWarnings();
->>>>>>> b1ad1d63691a324ae4a51a21de9d68777cd53b55
         controller = new EmployeesController();
         this.employee = employee;
         this.view = view;
         this.viewAdmin = viewAdmin;
-<<<<<<< HEAD
         hideWarnings();
-=======
->>>>>>> b1ad1d63691a324ae4a51a21de9d68777cd53b55
         showEmployeeData();
     }
 

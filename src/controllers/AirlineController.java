@@ -8,6 +8,7 @@ import exceptions.AirlineAlreadyRegisteredException;
 import exceptions.AirlineNameInUseException;
 import model.Airline;
 import model.Employee;
+import model.User;
 import singleton.Singleton;
 import util.LSE;
 
@@ -36,23 +37,23 @@ public class AirlineController extends BaseController {
         return null;
     }
 
-    public void addTravelerAsAdminAirline(Airline airline) {
+    public void addTravelerAsAdminAirline(Airline airline, Employee admin) {
         Airline aux = searchAirline(airline.getName());
         if (aux == null) {
             airlines.addDato(airline);
-            users.addDato(airline.getAdmin());
-            airline.getEmployees().addDato(airline.getAdmin());
+            users.addDato(admin);
+            airline.getEmployees().addDato(admin);
             Singleton.getINSTANCE().writeAirline();
             Singleton.getINSTANCE().writeUser();
         }
     }
 
-    public void addAirline(Airline airline) {
+    public void addAirline(Airline airline, Employee admin) {
         Airline aux = searchAirline(airline.getName());
         if (aux == null) {
             airlines.addDato(airline);
-            users.addDato(airline.getAdmin());
-            airline.getEmployees().addDato(airline.getAdmin());
+            users.addDato(admin);
+            airline.getEmployees().addDato(admin);
             Singleton.getINSTANCE().writeAirline();
             Singleton.getINSTANCE().writeUser();
         } else {

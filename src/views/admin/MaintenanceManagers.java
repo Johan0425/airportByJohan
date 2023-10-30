@@ -120,7 +120,6 @@ public class MaintenanceManagers extends javax.swing.JInternalFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 102, 153));
 
         employeesTable.setBackground(new java.awt.Color(255, 255, 255));
-        employeesTable.setBorder(null);
         employeesTable.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         employeesTable.setForeground(new java.awt.Color(0, 102, 153));
         employeesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -198,17 +197,17 @@ public class MaintenanceManagers extends javax.swing.JInternalFrame {
                             .addComponent(jSeparator1)
                             .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(141, 141, 141)
+                        .addGap(100, 100, 100)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(139, 139, 139)
                         .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100)
                         .addComponent(btnGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -222,13 +221,13 @@ public class MaintenanceManagers extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(78, 78, 78)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,7 +262,7 @@ public class MaintenanceManagers extends javax.swing.JInternalFrame {
                 view.openUpdatedMaintenanceManagerView(employee, this);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una aerolinea de la tabla");
+            JOptionPane.showMessageDialog(null, "Seleccione un gestor de mantenimiento de la tabla");
         }
     }//GEN-LAST:event_btnGestionActionPerformed
 

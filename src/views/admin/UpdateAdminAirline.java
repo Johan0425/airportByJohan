@@ -22,6 +22,7 @@ public class UpdateAdminAirline extends javax.swing.JInternalFrame {
 
     private final Employee admin;
     private final AdminsAirline view;
+    private final Airlines airlineView;
     private final Airline airline;
 
     /**
@@ -29,10 +30,11 @@ public class UpdateAdminAirline extends javax.swing.JInternalFrame {
      *
      * @param admin
      * @param view
+     * @param airlineView
      * @param airline
      * @param view2
      */
-    public UpdateAdminAirline(Employee admin, AdminsAirline view, Airline airline, AdminTasks view2) {
+    public UpdateAdminAirline(Employee admin, AdminsAirline view, Airlines airlineView, Airline airline, AdminTasks view2) {
         initComponents();
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
@@ -43,6 +45,7 @@ public class UpdateAdminAirline extends javax.swing.JInternalFrame {
         controller = new AirlineEmployeeController(airline);
         this.admin = admin;
         this.view = view;
+        this.airlineView = airlineView;
         this.airline = airline;
         hideWarnings();
         showAdminData();
@@ -435,7 +438,7 @@ public class UpdateAdminAirline extends javax.swing.JInternalFrame {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         view2.validateDesktop();
-        view2.openMaintenanceManagersView();
+        view2.openAdminsAirline(airline, airlineView);
     }//GEN-LAST:event_btnCloseActionPerformed
 
 

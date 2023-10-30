@@ -6,9 +6,7 @@ package views.admin;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Airline;
 import model.Employee;
@@ -48,8 +46,8 @@ public class AdminTasks extends javax.swing.JInternalFrame {
         }
     }
 
-    public void openUpdateAdminAirline(Employee admin, AdminsAirline viewAdminsAirline, Airline airline) {
-        UpdateAdminAirline view = new UpdateAdminAirline(admin, viewAdminsAirline, airline, this);
+    public void openUpdateAdminAirline(Employee admin, AdminsAirline viewAdminsAirline, Airline airline, Airlines airlinesView) {
+        UpdateAdminAirline view = new UpdateAdminAirline(admin, viewAdminsAirline, airlinesView, airline, this);
         dsMain.add(view);
         view.setVisible(true);
     }
@@ -120,7 +118,9 @@ public class AdminTasks extends javax.swing.JInternalFrame {
             }
         };
         jLabel1 = new javax.swing.JLabel();
-        cbxGestions = new javax.swing.JComboBox<>();
+        btnMaintenanceEmployee = new javax.swing.JButton();
+        btnAirlines = new javax.swing.JButton();
+        btnRequest = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,10 +139,36 @@ public class AdminTasks extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
         jLabel1.setText("GESTIONAR:");
 
-        cbxGestions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción:", "Gestores de mantenimiento", "Aerolineas", "Solicitudes" }));
-        cbxGestions.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxGestionsItemStateChanged(evt);
+        btnMaintenanceEmployee.setBackground(new java.awt.Color(0, 102, 153));
+        btnMaintenanceEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnMaintenanceEmployee.setForeground(new java.awt.Color(255, 255, 255));
+        btnMaintenanceEmployee.setText("Gestores de mantenimiento");
+        btnMaintenanceEmployee.setBorder(null);
+        btnMaintenanceEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaintenanceEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnAirlines.setBackground(new java.awt.Color(0, 102, 153));
+        btnAirlines.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnAirlines.setForeground(new java.awt.Color(255, 255, 255));
+        btnAirlines.setText("Aerolineas");
+        btnAirlines.setBorder(null);
+        btnAirlines.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAirlinesActionPerformed(evt);
+            }
+        });
+
+        btnRequest.setBackground(new java.awt.Color(0, 102, 153));
+        btnRequest.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnRequest.setForeground(new java.awt.Color(255, 255, 255));
+        btnRequest.setText("Solicitudes");
+        btnRequest.setBorder(null);
+        btnRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRequestActionPerformed(evt);
             }
         });
 
@@ -152,20 +178,30 @@ public class AdminTasks extends javax.swing.JInternalFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dsMain, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(288, 288, 288)
+                .addGap(72, 72, 72)
                 .addComponent(jLabel1)
-                .addGap(100, 100, 100)
-                .addComponent(cbxGestions, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addGap(72, 72, 72)
+                .addComponent(btnMaintenanceEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnAirlines, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(btnRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(0, 14, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cbxGestions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(21, 21, 21))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMaintenanceEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAirlines, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(dsMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -183,30 +219,26 @@ public class AdminTasks extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbxGestionsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxGestionsItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            validateDesktop();
+    private void btnAirlinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlinesActionPerformed
+        validateDesktop();
+        openAirlinesView();
+    }//GEN-LAST:event_btnAirlinesActionPerformed
 
-            switch (cbxGestions.getSelectedIndex()) {
-                case 1:
-                    openMaintenanceManagersView();
-                    break;
-                case 2:
-                    openAirlinesView();
-                    break;
-                case 3:
-                    openRequestView();
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Seleccione la gestión que quiere realizar");
-                    break;
-            }
-        }
-    }//GEN-LAST:event_cbxGestionsItemStateChanged
+    private void btnMaintenanceEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaintenanceEmployeeActionPerformed
+        validateDesktop();
+        openMaintenanceManagersView();
+    }//GEN-LAST:event_btnMaintenanceEmployeeActionPerformed
+
+    private void btnRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestActionPerformed
+        validateDesktop();
+        openRequestView();
+    }//GEN-LAST:event_btnRequestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxGestions;
+    private javax.swing.JButton btnAirlines;
+    private javax.swing.JButton btnMaintenanceEmployee;
+    private javax.swing.JButton btnRequest;
     private javax.swing.JDesktopPane dsMain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPanel;

@@ -47,8 +47,8 @@ public class LoginView extends javax.swing.JInternalFrame {
         setSize(1200, 750);
         controller = new LoginController();
         controller2 = new MultiUserController();
-        placeHolder();
         this.view = view;
+        placeHolder();
     }
 
     private void cleanFields() {
@@ -98,11 +98,13 @@ public class LoginView extends javax.swing.JInternalFrame {
                 case GENERAL_ADMIN:
                     view.openAdminTasks(user);
                     view.validateBtnManagmentGeneralAdmin(user);
+                    JOptionPane.showMessageDialog(null, "Bienenido admin general");
                     this.dispose();
                     break;
 
                 case TRAVELER:
                     view.validateDesktop();
+                    view.validateBtnForEmployess();
                     JOptionPane.showMessageDialog(null, "Bienvenido viajero");
                     break;
 
@@ -110,24 +112,28 @@ public class LoginView extends javax.swing.JInternalFrame {
                     Airline airline = controller.searchAirline(user.getId());
                     view.openAirlineAdminTasks((Employee) user, airline);
                     view.setLaberlAirline(airline.getName());
-                    JOptionPane.showMessageDialog(null, "Bienvenido admin general");
+                    JOptionPane.showMessageDialog(null, "Bienvenido admin de aerolinea");
                     view.validateBtnManagmentAirlineAdmin((Employee) user, airline);
                     this.dispose();
                     break;
 
                 case MAINTENANCE_MANAGER:
                     view.validateDesktop();
+                    view.validateBtnForEmployess();
                     JOptionPane.showMessageDialog(null, "Bienvenido gestor de mantenimiento");
                     break;
 
                 case LOGISTICS_EMPLOYEE:
                     view.validateDesktop();
                     Airline airline1 = controller.searchAirline(user.getId());
+                    view.validateBtnForLogisticEmployee(airline1);
+                    ;
                     JOptionPane.showMessageDialog(null, "Bienvenido empleado de logística");
                     break;
 
                 case FLIGHT_CAPTAIN:
                     view.validateDesktop();
+                    view.validateBtnForEmployess();
                     JOptionPane.showMessageDialog(null, "Bienvenido capitán");
                     break;
 
@@ -143,6 +149,7 @@ public class LoginView extends javax.swing.JInternalFrame {
         return (txtUser.getText().isEmpty() || txtPassword.getText().isEmpty());
     }
 
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     private void placeHolder() {
         new TextPrompt("Usuario", txtUser);
         new TextPrompt("**********", txtPassword);

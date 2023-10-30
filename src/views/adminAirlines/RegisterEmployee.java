@@ -67,8 +67,6 @@ public class RegisterEmployee extends javax.swing.JInternalFrame {
                 view.fillTable();
                 return;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo hacer");
         }
 
         try {
@@ -151,7 +149,7 @@ public class RegisterEmployee extends javax.swing.JInternalFrame {
         }
 
     }
-    
+
     private void cleanFillFields() {
         txtName.setText("");
         txtUsername.setText("");
@@ -365,7 +363,7 @@ public class RegisterEmployee extends javax.swing.JInternalFrame {
                         .addGap(495, 495, 495))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(662, 662, 662))))
+                        .addGap(660, 660, 660))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,9 +414,9 @@ public class RegisterEmployee extends javax.swing.JInternalFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(56, 56, 56)
                 .addComponent(btnAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -27,6 +27,10 @@ public class LSE<S> implements Serializable {
         return size;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public void addDato(S data) {
         Node<S> newNode = new Node<>(data);
         if (first == null) {

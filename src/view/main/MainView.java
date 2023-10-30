@@ -28,6 +28,7 @@ import view.login.HasMultiUserView;
 import view.login.LoginView;
 import views.admin.AdminTasks;
 import views.adminAirlines.AirlineAdminTasks;
+import views.logisticsEmployee.LogisticsEmployeeTasks;
 import views.traveler.RegisterView;
 import views.traveler.UpdateManagmentUserTraveler;
 
@@ -55,15 +56,84 @@ public class MainView extends javax.swing.JFrame {
         controller2 = new LoginController();
         hidePanelMenu();
         validateButton();
-
         addAdmin();
-//        setLaberlUserNameLogged();
     }
 
     private void validateButton() {
+
+        User user = controller2.getUser();
+
         if (lblUserName.getText().isEmpty()) {
             btnManagments.setVisible(false);
+        } else if (user == null) {
+            btnManagments.setVisible(false);
         }
+
+    }
+
+    public void validateBtnForEmployess() {
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+
+            if (user != null) {
+
+                switch (user.getRole()) {
+
+                    case TRAVELER -> {
+                        btnManagments.setVisible(false);
+                    }
+
+                    case FLIGHT_CAPTAIN -> {
+                        btnManagments.setVisible(false);
+                    }
+
+                    case MAINTENANCE_MANAGER -> {
+                        btnManagments.setVisible(false);
+                    }
+                    default -> {
+                        btnManagments.setVisible(false);
+                        JOptionPane.showMessageDialog(null, "No se pudo validar");
+                    }
+                }
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+    }
+
+    public void validateBtnForLogisticEmployee(Airline airline) {
+        try {
+            User user = Singleton.getINSTANCE().getUser();
+
+            switch (user.getRole()) {
+                case LOGISTICS_EMPLOYEE -> {
+                    openLogisticsEmployeeTasks(airline);
+                    btnManagments.setVisible(true);
+                }
+
+                case TRAVELER -> {
+                    btnManagments.setVisible(false);
+                }
+
+                case FLIGHT_CAPTAIN -> {
+                    btnManagments.setVisible(false);
+                }
+
+                case MAINTENANCE_MANAGER -> {
+                    btnManagments.setVisible(false);
+                }
+                default -> {
+                    btnManagments.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "No se pudo validar");
+                }
+            }
+
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }
 
     public void validateBtnManagmentAirlineAdmin(Employee employee, Airline airline) {
@@ -75,8 +145,10 @@ public class MainView extends javax.swing.JFrame {
                     openAirlineAdminTasks(employee, airline);
                     btnManagments.setVisible(true);
                 }
-                default ->
+                default -> {
+                    btnManagments.setVisible(false);
                     JOptionPane.showMessageDialog(null, "No se pudo validar");
+                }
             }
 
         } catch (IllegalStateException ex) {
@@ -94,8 +166,10 @@ public class MainView extends javax.swing.JFrame {
                     btnManagments.setVisible(true);
                 }
 
-                default ->
+                default -> {
+                    btnManagments.setVisible(false);
                     JOptionPane.showMessageDialog(null, "No se pudo validar");
+                }
             }
 
         } catch (IllegalStateException ex) {
@@ -143,6 +217,12 @@ public class MainView extends javax.swing.JFrame {
             dsMain.getComponent(0).setVisible(false);
             dsMain.remove(0);
         }
+    }
+
+    public void openLogisticsEmployeeTasks(Airline airline) {
+        LogisticsEmployeeTasks view = new LogisticsEmployeeTasks(airline);
+        dsMain.add(view);
+        view.setVisible(true);
     }
 
     public void openMultiUsersView(User user) {
@@ -464,8 +544,12 @@ public class MainView extends javax.swing.JFrame {
                 case MAINTENANCE_MANAGER:
 
                     break;
+                case TRAVELER:
+
+                    break;
+
                 default:
-                    JOptionPane.showMessageDialog(null, "No puede acceder");
+                    JOptionPane.showMessageDialog(null, "No puede acceder, no tiene los permisos");
             }
 
         } catch (IllegalStateException ex) {
@@ -486,7 +570,6 @@ public class MainView extends javax.swing.JFrame {
                     openUpdatedTravelerInformation(traveler);
                     break;
                 case AIRLINE_ADMIN:
-
                     break;
                 case FLIGHT_CAPTAIN:
 
@@ -501,7 +584,7 @@ public class MainView extends javax.swing.JFrame {
 
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "No puede modificar su información");
+                    JOptionPane.showMessageDialog(null, "No puede modificar su información, no tienes el permiso");
             }
 
         } catch (IllegalStateException ex) {

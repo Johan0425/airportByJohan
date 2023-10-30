@@ -25,7 +25,7 @@ public class TravelerController extends BaseController {
         }
         return travelers;
     }
-    
+
     public void addEmployeeAsTraveler(Traveler traveler) {
         Traveler aux = searchTraveler(traveler.getId());
         if (aux == null) {
@@ -48,6 +48,12 @@ public class TravelerController extends BaseController {
     public boolean updateTraveler(Traveler traveler) {
         Traveler aux = searchTraveler(traveler.getId());
         boolean wasEdited = false;
+        
+        if (!aux.getNumberContact().equals(traveler.getNumberContact())) {
+            validatePhoneNumber(traveler.getNumberContact());
+            aux.setNumberContact(traveler.getNumberContact());
+            wasEdited = true;
+        }
 
         if (!aux.getUsername().equals(traveler.getUsername())) {
             validateUsername(traveler.getUsername());
@@ -59,7 +65,7 @@ public class TravelerController extends BaseController {
             aux.setPassword(traveler.getPassword());
             wasEdited = true;
         }
-        
+
         if (wasEdited) {
             Singleton.getINSTANCE().writeUser();
             return true;
@@ -80,5 +86,17 @@ public class TravelerController extends BaseController {
             }
         }
         return null;
+    }
+
+    public boolean isPhoneNumberInUse(String phoneNumber) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getRole() == Role.TRAVELER) {
+                Traveler aux = (Traveler) users.get(i);
+                if (aux.getNumberContact().equals(phoneNumber)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

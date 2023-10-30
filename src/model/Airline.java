@@ -19,17 +19,19 @@ public class Airline implements Serializable {
     private final LSE<Airplane> airplanes;
     private final LSE<Flight> flights;
 
-    private Employee admin;
     private String name;
 
-    public Airline(String name, Employee admin) {
+    public Airline(String name) {
         this.name = name;
-        this.admin = admin;
         employees = new LSE<>();
         airplanes = new LSE<>();
         flights = new LSE<>();
     }
 
+    public LSE<Flight> getFlights() {
+        return flights;
+    }
+    
     public LSE<Employee> getEmployees() {
         return employees;
     }
@@ -40,14 +42,6 @@ public class Airline implements Serializable {
 
     public LSE<Flight> getFlightsHistory() {
         return flights;
-    }
-
-    public Employee getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Employee admin) {
-        this.admin = admin;
     }
 
     public String getName() {
@@ -167,6 +161,77 @@ public class Airline implements Serializable {
             Airplane aux = airplanes.get(i);
             if (aux.getModel().equals(model)) {
                 airplanes.remove(i);
+                Singleton.getINSTANCE().writeAirline();
+                return aux;
+            }
+        }
+        return null;
+    }
+
+    public Flight searchFlight(int id) {
+        for (int i = 0; i < flights.size(); i++) {
+            Flight aux = flights.get(i);
+            if (aux.getId() == id) {
+                return aux;
+            }
+        }
+        return null;
+    }
+
+    public void addFlight(Flight flight) {
+        flights.addDato(flight);
+        Singleton.getINSTANCE().writeAirline();
+    }
+
+    public boolean updateFlight(Flight flight) {
+        Flight aux = searchFlight(flight.getId());
+        boolean wasEdited = false;
+
+        if (!aux.getCaptain().getId().equals(flight.getCaptain().getId())) {
+            aux.setCaptain(flight.getCaptain());
+            wasEdited = true;
+        }
+
+        if (!aux.getAirplane().getModel().equals(flight.getAirplane().getModel())) {
+            aux.setAirplane(flight.getAirplane());
+            wasEdited = true;
+        }
+
+        if (aux.getDate() != flight.getDate()) {
+            aux.setDate(flight.getDate());
+            wasEdited = true;
+        }
+
+        if (aux.getHour() != flight.getHour()) {
+            aux.setHour(flight.getHour());
+            wasEdited = true;
+        }
+
+        if (aux.getAproximateTime() != flight.getAproximateTime()) {
+            aux.setAproximateTime(flight.getAproximateTime());
+            wasEdited = true;
+        }
+
+        if (!aux.getOrigin().equals(flight.getOrigin())) {
+            aux.setOrigin(flight.getOrigin());
+            wasEdited = true;
+        }
+
+        if (!aux.getDestination().equals(flight.getDestination())) {
+            aux.setDestination(flight.getDestination());
+            wasEdited = true;
+        }
+
+        Singleton.getINSTANCE().writeAirline();
+
+        return wasEdited;
+    }
+
+    public Flight deleteFlight(int id) {
+        for (int i = 0; i < flights.size(); i++) {
+            Flight aux = flights.get(i);
+            if (aux.getId() == id) {
+                flights.remove(i);
                 Singleton.getINSTANCE().writeAirline();
                 return aux;
             }

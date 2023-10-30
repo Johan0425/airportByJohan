@@ -69,10 +69,7 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                 cleanFields();
                 return;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo hacer");
         }
-
         try {
             controller.addEmployee(admin);
             JOptionPane.showMessageDialog(null, "Registro exitoso");

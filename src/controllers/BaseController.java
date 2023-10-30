@@ -5,6 +5,7 @@
 package controllers;
 
 import enums.Role;
+import exceptions.NumberAlreadyInUse;
 import exceptions.UsernameInUseException;
 import model.Employee;
 import model.Traveler;
@@ -22,6 +23,15 @@ public class BaseController {
 
     public BaseController() {
         users = Singleton.getINSTANCE().getUsers();
+    }
+
+    public void validatePhoneNumber(String phoneNumber) {
+        for (int i = 0; i < users.size(); i++) {
+            Traveler aux = (Traveler) users.get(i);
+            if (phoneNumber.equals(aux.getNumberContact())) {
+                throw new NumberAlreadyInUse();
+            }
+        }
     }
 
     public void validateUsername(String username) {

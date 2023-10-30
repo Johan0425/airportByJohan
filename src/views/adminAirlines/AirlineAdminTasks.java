@@ -6,13 +6,12 @@ package views.adminAirlines;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Airline;
 import model.Airplane;
 import model.Employee;
+import views.previewAirplane.PreviewAirplane;
 
 /**
  *
@@ -46,6 +45,13 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
             dsMain.getComponent(0).setVisible(false);
             dsMain.remove(0);
         }
+
+    }
+
+    public void openPreviewPlane(int row, int groupSeats, Airline airline, Airplanes viewAirplanes) {
+        PreviewAirplane view = new PreviewAirplane(this, row, groupSeats, airline, viewAirplanes);
+        dsMain.add(view);
+        view.setVisible(true);
     }
 
     public void openUpdatedEmployeeView(Employee employee, Airline airline, AirlineEmployees view2) {
@@ -67,7 +73,7 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
     }
 
     public void openRegisterAirplane(Airline airline, Airplanes view2) {
-        RegisterAirplane view = new RegisterAirplane(airline, view2);
+        RegisterAirplane view = new RegisterAirplane(this, airline, view2);
         dsMain.add(view);
         view.setVisible(true);
     }
@@ -108,7 +114,9 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
             }
         };
         jLabel1 = new javax.swing.JLabel();
-        cbxGestions = new javax.swing.JComboBox<>();
+        btnManagmentEmployee = new javax.swing.JButton();
+        btnManagmentAirplane = new javax.swing.JButton();
+        btnHistoryFlights = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -116,7 +124,7 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
         dsMain.setLayout(dsMainLayout);
         dsMainLayout.setHorizontalGroup(
             dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1188, Short.MAX_VALUE)
         );
         dsMainLayout.setVerticalGroup(
             dsMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,10 +135,36 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
         jLabel1.setText("FUNCIONES:");
 
-        cbxGestions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción:", "Gestionar Empleados", "Gestionar Vuelos", "Historial de vuelos" }));
-        cbxGestions.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxGestionsItemStateChanged(evt);
+        btnManagmentEmployee.setBackground(new java.awt.Color(0, 102, 153));
+        btnManagmentEmployee.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnManagmentEmployee.setForeground(new java.awt.Color(255, 255, 255));
+        btnManagmentEmployee.setText("Gestionar Empleados");
+        btnManagmentEmployee.setBorder(null);
+        btnManagmentEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagmentEmployeeActionPerformed(evt);
+            }
+        });
+
+        btnManagmentAirplane.setBackground(new java.awt.Color(0, 102, 153));
+        btnManagmentAirplane.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnManagmentAirplane.setForeground(new java.awt.Color(255, 255, 255));
+        btnManagmentAirplane.setText("Gestionar Aviones");
+        btnManagmentAirplane.setBorder(null);
+        btnManagmentAirplane.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagmentAirplaneActionPerformed(evt);
+            }
+        });
+
+        btnHistoryFlights.setBackground(new java.awt.Color(0, 102, 153));
+        btnHistoryFlights.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnHistoryFlights.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistoryFlights.setText("Historial Vuelos");
+        btnHistoryFlights.setBorder(null);
+        btnHistoryFlights.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoryFlightsActionPerformed(evt);
             }
         });
 
@@ -140,19 +174,26 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dsMain, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(288, 288, 288)
+                .addGap(97, 97, 97)
                 .addComponent(jLabel1)
-                .addGap(100, 100, 100)
-                .addComponent(cbxGestions, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(btnManagmentEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnManagmentAirplane, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(btnHistoryFlights, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cbxGestions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(btnManagmentEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnManagmentAirplane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHistoryFlights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dsMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -165,36 +206,31 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbxGestionsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxGestionsItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            validateDesktop();
+    private void btnManagmentEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagmentEmployeeActionPerformed
+        validateDesktop();
+        openAirlineEmployeesView();
+    }//GEN-LAST:event_btnManagmentEmployeeActionPerformed
 
-            switch (cbxGestions.getSelectedIndex()) {
-                case 1:
-                    openAirlineEmployeesView();
-                    break;
-                case 2:
-                    openAirplanesView();
-                    break;
-                case 3:
-                    openHistoryAirplanesView();
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Seleccione la gestión que quiere realizar");
-                    break;
-            }
-        }
-    }//GEN-LAST:event_cbxGestionsItemStateChanged
+    private void btnManagmentAirplaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagmentAirplaneActionPerformed
+        validateDesktop();
+        openAirplanesView();
+    }//GEN-LAST:event_btnManagmentAirplaneActionPerformed
 
+    private void btnHistoryFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryFlightsActionPerformed
+        validateDesktop();
+        openHistoryAirplanesView();
+    }//GEN-LAST:event_btnHistoryFlightsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxGestions;
+    private javax.swing.JButton btnHistoryFlights;
+    private javax.swing.JButton btnManagmentAirplane;
+    private javax.swing.JButton btnManagmentEmployee;
     private javax.swing.JDesktopPane dsMain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPanel;

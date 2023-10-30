@@ -59,25 +59,23 @@ public class CreateAirline extends javax.swing.JInternalFrame {
 
         Traveler traveler = controller.searchTraveler(adminId);
         Employee admin = new Employee(emailAdmin, salaryAdmin, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
-        Airline airline = new Airline(airlineName, admin);
+        Airline airline = new Airline(airlineName);
 
         if (traveler != null) {
             int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como viajero. "
                     + "¿Desea registrarse como empleado?", "Confirmación", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                controller.addTravelerAsAdminAirline(airline);
+                controller.addTravelerAsAdminAirline(airline, admin);
                 JOptionPane.showMessageDialog(null, "Registro exitoso");
                 view.fillTable();
                 this.dispose();
                 viewAdminTasks.openAirlinesView();
                 return;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo hacer");
         }
 
         try {
-            controller.addAirline(airline);
+            controller.addAirline(airline, admin);
             JOptionPane.showMessageDialog(null, "Registro exitoso");
             view.fillTable();
             this.dispose();
@@ -350,10 +348,6 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClose)
-                .addGap(26, 26, 26))
-            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(178, 178, 178)
@@ -410,11 +404,17 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                             .addComponent(nameWarning)
                             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtAirlineName, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                                .addComponent(jSeparator7))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(407, 407, 407)
-                        .addComponent(btnAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jSeparator7)))))
                 .addContainerGap(227, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnClose)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(515, 515, 515))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,9 +477,9 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(72, 72, 72)
                 .addComponent(btnAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(167, 167, 167))
+                .addGap(101, 101, 101))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

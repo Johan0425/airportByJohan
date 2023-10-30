@@ -17,16 +17,18 @@ import model.Airplane;
 public class RegisterAirplane extends javax.swing.JInternalFrame {
 
     private final AirplaneController controller;
+    private final AirlineAdminTasks viewTasks;
     private final Airline airline;
     private final Airplanes view;
 
     /**
      * Creates new form RegisterAirplane
      *
+     * @param viewTasks
      * @param airline
      * @param view
      */
-    public RegisterAirplane(Airline airline, Airplanes view) {
+    public RegisterAirplane(AirlineAdminTasks viewTasks, Airline airline, Airplanes view) {
         initComponents();
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
@@ -35,6 +37,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         setSize(1200, 700);
         controller = new AirplaneController(airline);
         this.view = view;
+        this.viewTasks = viewTasks;
         this.airline = airline;
     }
 
@@ -46,6 +49,10 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
 
     private boolean hasEmptyFields() {
         return (txtModel.getText().isEmpty() || txtRows.getText().isEmpty() || cbxNumCols.getSelectedIndex() == 0);
+    }
+
+    private boolean hasEmptyFieldsToPreview() {
+        return (txtRows.getText().isEmpty() || cbxNumCols.getSelectedIndex() == 0);
     }
 
     /**
@@ -67,6 +74,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         txtModel = new javax.swing.JTextField();
         txtRows = new javax.swing.JTextField();
         cbxNumCols = new javax.swing.JComboBox<>();
+        btnPreviewAirplane = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -108,6 +116,17 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         cbxNumCols.setForeground(new java.awt.Color(0, 102, 153));
         cbxNumCols.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción:", "2", "3" }));
 
+        btnPreviewAirplane.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnPreviewAirplane.setForeground(new java.awt.Color(0, 102, 153));
+        btnPreviewAirplane.setText("PREVISUALIZAR");
+        btnPreviewAirplane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153), 2));
+        btnPreviewAirplane.setContentAreaFilled(false);
+        btnPreviewAirplane.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviewAirplaneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -116,24 +135,27 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(351, 351, 351)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtModel)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(txtRows, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtModel)
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                    .addComponent(txtRows, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                    .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPreviewAirplane))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(530, 530, 530)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(422, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(520, 520, 520))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +178,9 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(cbxNumCols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPreviewAirplane, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(193, Short.MAX_VALUE))
         );
 
@@ -200,9 +224,24 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         view.fillTable();
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnPreviewAirplaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewAirplaneActionPerformed
+        if (hasEmptyFieldsToPreview()) {
+            JOptionPane.showMessageDialog(null, "Para previsualizar debe de tener el numero de filas y grupos que quiere en el avión");
+            return;
+
+        }
+        int row = Integer.parseInt(txtRows.getText());
+        int groupSeats = Integer.parseInt(cbxNumCols.getSelectedItem().toString());
+
+        viewTasks.validateDesktop();
+        viewTasks.openPreviewPlane(row, groupSeats, airline, view);
+
+    }//GEN-LAST:event_btnPreviewAirplaneActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnPreviewAirplane;
     private javax.swing.JComboBox<String> cbxNumCols;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

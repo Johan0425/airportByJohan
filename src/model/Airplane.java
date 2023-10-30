@@ -5,6 +5,7 @@
 package model;
 
 import enums.AirplaneStatus;
+import enums.Cities;
 import java.io.Serializable;
 import util.LSE;
 
@@ -13,7 +14,7 @@ import util.LSE;
  * @author joanp
  */
 public class Airplane implements Serializable {
-    
+
     private final LSE<Flight> flights;
     private final Airline airline;
     private int numRows;
@@ -21,12 +22,14 @@ public class Airplane implements Serializable {
     private String model;
     private AirplaneMaintenance maintenance;
     private AirplaneStatus status;
-    
+    private Cities location;
+
     public Airplane(Airline airline, int numRows, int numCols, String model) {
         this.airline = airline;
         this.numRows = numRows;
         this.numCols = numCols;
         this.model = model;
+        location = Cities.AXM;
         flights = new LSE<>();
         status = AirplaneStatus.AVAILABLE;
     }
@@ -78,5 +81,13 @@ public class Airplane implements Serializable {
     public void setStatus(AirplaneStatus status) {
         this.status = status;
     }
-    
+
+    public Cities getLocation() {
+        return location;
+    }
+
+    public void setLocation(Cities location) {
+        this.location = location;
+    }
+
 }
