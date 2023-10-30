@@ -98,7 +98,6 @@ public class MainView extends javax.swing.JFrame {
                     }
                     default -> {
                         btnManagments.setVisible(false);
-                        JOptionPane.showMessageDialog(null, "No se pudo validar");
                     }
                 }
             }
@@ -132,7 +131,6 @@ public class MainView extends javax.swing.JFrame {
                 }
                 default -> {
                     btnManagments.setVisible(false);
-                    JOptionPane.showMessageDialog(null, "No se pudo validar");
                 }
             }
 
@@ -153,7 +151,6 @@ public class MainView extends javax.swing.JFrame {
                 }
                 default -> {
                     btnManagments.setVisible(false);
-                    JOptionPane.showMessageDialog(null, "No se pudo validar");
                 }
             }
 
@@ -174,7 +171,6 @@ public class MainView extends javax.swing.JFrame {
 
                 default -> {
                     btnManagments.setVisible(false);
-                    JOptionPane.showMessageDialog(null, "No se pudo validar");
                 }
             }
 

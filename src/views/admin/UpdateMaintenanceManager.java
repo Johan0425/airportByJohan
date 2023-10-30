@@ -73,7 +73,8 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
 
     private boolean hasEmptyFields() {
         return (txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty()
-                || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty());
+                || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty())
+                || txtAge.getText().isEmpty();
     }
 
     private void hideWarnings() {
@@ -88,6 +89,7 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         txtAdminUsername.setText(employee.getUsername());
         txtAdminPassword.setText(employee.getPassword());
         txtAdminSalary.setText(String.valueOf(employee.getSalary()));
+        txtAge.setText(String.valueOf(employee.getAge()));
     }
 
     /**
@@ -122,6 +124,9 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         idAdminWarning = new javax.swing.JLabel();
         usernameWarning = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -224,11 +229,22 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 153));
+        jLabel8.setText("Edad:");
+
+        txtAge.setBorder(null);
+        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAgeKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addGap(26, 26, 26))
@@ -280,16 +296,23 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
                                     .addComponent(jSeparator2)
                                     .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(489, 489, 489)
-                        .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(498, 498, 498)
+                        .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(378, 378, 378)
+                        .addComponent(jLabel8)
+                        .addGap(87, 87, 87)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator8)
+                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(27, 27, 27)
                 .addComponent(idAdminWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,9 +358,15 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(100, 100, 100)
+                .addGap(86, 86, 86)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
                 .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(57, 57, 57))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -362,12 +391,13 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
 
         String adminId = txtAdminId.getText();
         String adminName = txtAdminName.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String emailAdmin = txtAdminEmail.getText();
         String usernameAdmin = txtAdminUsername.getText();
         String passwordAdmin = txtAdminPassword.getText();
         double salaryAdmin = Double.parseDouble(txtAdminSalary.getText());
 
-        Employee updatedAdmin = new Employee(emailAdmin, salaryAdmin, Role.MAINTENANCE_MANAGER, adminId, adminName, usernameAdmin, passwordAdmin);
+        Employee updatedAdmin = new Employee(emailAdmin, salaryAdmin, age, Role.MAINTENANCE_MANAGER, adminId, adminName, usernameAdmin, passwordAdmin);
         boolean success = controller.updateEmployee(updatedAdmin);
         if (success) {
             JOptionPane.showMessageDialog(null, "Actualización exitosa");
@@ -434,6 +464,14 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         viewAdmin.openMaintenanceManagersView();
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    private void txtAgeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyTyped
+        String age = txtAge.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || age.length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAgeKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
@@ -445,12 +483,14 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField txtAdminEmail;
     private javax.swing.JTextField txtAdminId;
@@ -458,6 +498,7 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAdminPassword;
     private javax.swing.JTextField txtAdminSalary;
     private javax.swing.JTextField txtAdminUsername;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JLabel usernameWarning;
     // End of variables declaration//GEN-END:variables
 }

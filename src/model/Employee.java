@@ -11,14 +11,24 @@ import enums.Role;
  * @author joanp
  */
 public class Employee extends User {
-    
+
     private String email;
     private double salary;
+    private int age;
 
-    public Employee(String email, double salary, Role role, String id, String fullname, String username, String password) {
+    public Employee(String email, double salary, int age, Role role, String id, String fullname, String username, String password) {
         super(role, id, fullname, username, password);
         this.email = email;
         this.salary = salary;
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getEmail() {
@@ -36,5 +46,5 @@ public class Employee extends User {
     public void setSalary(double salary) {
         this.salary = salary;
     }
-    
+
 }

@@ -340,7 +340,7 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
                     .addComponent(jSeparator4)
                     .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addGap(26, 26, 26))
             .addGroup(mainPanelLayout.createSequentialGroup()

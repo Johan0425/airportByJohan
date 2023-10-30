@@ -52,13 +52,14 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         String airlineName = txtAirlineName.getText();
         String adminId = txtAdminId.getText();
         String adminName = txtAdminName.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String emailAdmin = txtAdminEmail.getText();
         String usernameAdmin = txtAdminUsername.getText();
         String passwordAdmin = txtAdminPassword.getText();
         double salaryAdmin = Double.parseDouble(txtAdminSalary.getText());
 
         Traveler traveler = controller.searchTraveler(adminId);
-        Employee admin = new Employee(emailAdmin, salaryAdmin, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
+        Employee admin = new Employee(emailAdmin, salaryAdmin, age, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
         Airline airline = new Airline(airlineName);
 
         if (traveler != null) {
@@ -126,12 +127,15 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         txtAdminName.setEditable(true);
         txtAdminUsername.setEditable(true);
         txtAdminPassword.setEditable(true);
+        txtAge.setEditable(true);
     }
 
     private void noEditableFields() {
         txtAdminName.setEditable(false);
         txtAdminUsername.setEditable(false);
         txtAdminPassword.setEditable(false);
+        txtAge.setEditable(false);
+
     }
 
     private void fillFields(String id) {
@@ -140,6 +144,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
             txtAdminName.setText(traveler.getFullname());
             txtAdminUsername.setText(traveler.getUsername());
             txtAdminPassword.setText(traveler.getPassword());
+            txtAge.setText(String.valueOf(traveler.getAge()));
 
         }
 
@@ -149,6 +154,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         txtAdminName.setText("");
         txtAdminUsername.setText("");
         txtAdminPassword.setText("");
+        txtAge.setText("");
     }
 
     private void validateUsername() {
@@ -171,7 +177,8 @@ public class CreateAirline extends javax.swing.JInternalFrame {
 
     private boolean hasEmptyFields() {
         return (txtAirlineName.getText().isEmpty() || txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty()
-                || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty());
+                || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty())
+                || txtAge.getText().isEmpty();
     }
 
     private void hideWarnings() {
@@ -218,6 +225,9 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         jSeparator7 = new javax.swing.JSeparator();
         nameWarning = new javax.swing.JLabel();
         lblEmployeeFound = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -343,69 +353,21 @@ public class CreateAirline extends javax.swing.JInternalFrame {
         lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
         lblEmployeeFound.setText("VIAJERO YA REGISTRADO");
 
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 153));
+        jLabel8.setText("Edad:");
+
+        txtAge.setBorder(null);
+        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAgeKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(178, 178, 178)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator3)
-                                    .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idAdminWarning)
-                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel7)
-                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblEmployeeFound)
-                                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jSeparator1)
-                                                .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(usernameWarning)
-                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jSeparator5)
-                                        .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(112, 112, 112)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator6)
-                                    .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator2)
-                                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(562, 562, 562)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameWarning)
-                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtAirlineName, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                                .addComponent(jSeparator7)))))
-                .addContainerGap(227, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,14 +376,84 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                         .addGap(26, 26, 26))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(btnAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(515, 515, 515))))
+                        .addGap(519, 519, 519))))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(478, 478, 478)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator3)
+                                            .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(idAdminWarning)
+                                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel7)
+                                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblEmployeeFound)
+                                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jSeparator1)
+                                                        .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(usernameWarning)
+                                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jSeparator5)
+                                                .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(112, 112, 112)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator4)
+                                            .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator6)
+                                            .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator2)
+                                            .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(384, 384, 384)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameWarning)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtAirlineName)
+                                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(175, 175, 175)
+                                .addComponent(jLabel8)
+                                .addGap(71, 71, 71)
+                                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(264, 264, 264)))))
+                .addGap(0, 218, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(nameWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -477,9 +509,15 @@ public class CreateAirline extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(72, 72, 72)
+                .addGap(55, 55, 55)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
                 .addComponent(btnAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -570,6 +608,14 @@ public class CreateAirline extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txtAirlineNameKeyReleased
 
+    private void txtAgeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyTyped
+        String age = txtAge.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || age.length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAgeKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAirline;
@@ -582,6 +628,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -589,6 +636,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel nameWarning;
@@ -598,6 +646,7 @@ public class CreateAirline extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAdminPassword;
     private javax.swing.JTextField txtAdminSalary;
     private javax.swing.JTextField txtAdminUsername;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtAirlineName;
     private javax.swing.JLabel usernameWarning;
     // End of variables declaration//GEN-END:variables

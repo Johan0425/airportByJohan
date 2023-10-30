@@ -27,6 +27,10 @@ public class Traveler extends User {
         travelHistory = new LSE<>();
     }
 
+    public int getAge() {
+        return age;
+    }
+
     public String getNumberContact() {
         return numberContact;
     }

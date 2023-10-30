@@ -52,12 +52,13 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         String id = txtId.getText();
         String name = txtName.getText();
         String email = txtEmail.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         double salary = Double.parseDouble(txtSalary.getText());
 
         Traveler traveler = controller.searchTraveler(id);
-        Employee admin = new Employee(email, salary, Role.MAINTENANCE_MANAGER, id, name, username, password);
+        Employee admin = new Employee(email, salary, age, Role.MAINTENANCE_MANAGER, id, name, username, password);
 
         if (traveler != null) {
             int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como viajero. "
@@ -87,6 +88,7 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         txtUsername.setText("");
         txtPassword.setText("");
         txtSalary.setText("");
+        txtAge.setText("");
     }
 
     private void validateFields() {
@@ -139,12 +141,14 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         txtName.setEditable(true);
         txtUsername.setEditable(true);
         txtPassword.setEditable(true);
+        txtAge.setEditable(true);
     }
 
     private void noEditableFields() {
         txtName.setEditable(false);
         txtUsername.setEditable(false);
         txtPassword.setEditable(false);
+        txtAge.setEditable(false);
     }
 
     private void fillFields(String id) {
@@ -153,7 +157,7 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
             txtName.setText(traveler.getFullname());
             txtUsername.setText(traveler.getUsername());
             txtPassword.setText(traveler.getPassword());
-
+            txtAge.setText(String.valueOf(traveler.getAge()));
         }
 
     }
@@ -162,10 +166,11 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         txtName.setText("");
         txtUsername.setText("");
         txtPassword.setText("");
+        txtAge.setText("");
     }
 
     private boolean hasEmptyFields() {
-        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty()
+        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty() || txtAge.getText().isEmpty()
                 || txtSalary.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty());
     }
 
@@ -208,6 +213,9 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         usernameWarning = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         lblEmployeeFound = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -315,6 +323,17 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
         lblEmployeeFound.setText("VIAJERO YA REGISTRADO");
 
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 153));
+        jLabel8.setText("Edad:");
+
+        txtAge.setBorder(null);
+        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAgeKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -326,7 +345,10 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(177, 177, 177)
+                        .addGap(485, 485, 485)
+                        .addComponent(btnAddManager, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -372,16 +394,20 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                                     .addComponent(jSeparator2)
                                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(489, 489, 489)
-                        .addComponent(btnAddManager, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(228, Short.MAX_VALUE))
+                        .addGap(384, 384, 384)
+                        .addComponent(jLabel8)
+                        .addGap(71, 71, 71)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator8)
+                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(234, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(32, 32, 32)
                 .addComponent(idAdminWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,9 +455,18 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(100, 100, 100)
+                .addGap(77, 77, 77)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(66, 66, 66)
                 .addComponent(btnAddManager, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -508,6 +543,14 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
         viewAdminTasks.openMaintenanceManagersView();
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    private void txtAgeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyTyped
+        String age = txtAge.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || age.length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAgeKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddManager;
@@ -519,14 +562,17 @@ public class RegisterMaintenanceManager extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;

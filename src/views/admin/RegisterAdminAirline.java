@@ -56,6 +56,7 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         txtAdminUsername.setText("");
         txtAdminPassword.setText("");
         txtAdminSalary.setText("");
+        txtAge.setText("");
     }
 
     private void validateFields() {
@@ -117,12 +118,14 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         txtAdminName.setEditable(true);
         txtAdminUsername.setEditable(true);
         txtAdminPassword.setEditable(true);
+        txtAge.setEditable(true);
     }
 
     private void noEditableFields() {
         txtAdminName.setEditable(false);
         txtAdminUsername.setEditable(false);
         txtAdminPassword.setEditable(false);
+        txtAge.setEditable(false);
     }
 
     private void fillFields(String id) {
@@ -131,7 +134,7 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
             txtAdminName.setText(traveler.getFullname());
             txtAdminUsername.setText(traveler.getUsername());
             txtAdminPassword.setText(traveler.getPassword());
-
+            txtAge.setText(String.valueOf(txtAge.getText()));
         }
 
     }
@@ -140,10 +143,11 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         txtAdminName.setText("");
         txtAdminUsername.setText("");
         txtAdminPassword.setText("");
+        txtAge.setText("");
     }
 
     private boolean hasEmptyFields() {
-        return (txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty()
+        return (txtAdminId.getText().isEmpty() || txtAdminName.getText().isEmpty() || txtAdminEmail.getText().isEmpty() || txtAge.getText().isEmpty()
                 || txtAdminSalary.getText().isEmpty() || txtAdminUsername.getText().isEmpty() || txtAdminPassword.getText().isEmpty());
     }
 
@@ -162,11 +166,12 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         String adminId = txtAdminId.getText();
         String adminName = txtAdminName.getText();
         String emailAdmin = txtAdminEmail.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String usernameAdmin = txtAdminUsername.getText();
         String passwordAdmin = txtAdminPassword.getText();
         double salaryAdmin = Double.parseDouble(txtAdminSalary.getText());
         Traveler traveler = controller.searchTraveler(adminId);
-        Employee admin = new Employee(emailAdmin, salaryAdmin, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
+        Employee admin = new Employee(emailAdmin, salaryAdmin, age, Role.AIRLINE_ADMIN, adminId, adminName, usernameAdmin, passwordAdmin);
 
         if (traveler != null) {
             int option = JOptionPane.showConfirmDialog(this, "La cédula ingresada ya está registrada como viajero. "
@@ -223,6 +228,9 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         usernameWarning = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         lblEmployeeFound = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -330,6 +338,17 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         lblEmployeeFound.setForeground(new java.awt.Color(0, 102, 153));
         lblEmployeeFound.setText("VIAJERO YA REGISTRADO");
 
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 153));
+        jLabel8.setText("Edad:");
+
+        txtAge.setBorder(null);
+        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAgeKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -387,8 +406,14 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
                                     .addComponent(jSeparator2)
                                     .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(490, 490, 490)
-                        .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(360, 360, 360)
+                        .addComponent(jLabel8)
+                        .addGap(71, 71, 71)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSeparator8)
+                                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(228, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -444,9 +469,18 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(93, 93, 93)
                 .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -523,6 +557,14 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         view2.openAdminsAirline(airline, airlineView);
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    private void txtAgeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyTyped
+        String age = txtAge.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || age.length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAgeKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAdmin;
@@ -534,12 +576,14 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblEmployeeFound;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField txtAdminEmail;
@@ -548,6 +592,7 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAdminPassword;
     private javax.swing.JTextField txtAdminSalary;
     private javax.swing.JTextField txtAdminUsername;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JLabel usernameWarning;
     // End of variables declaration//GEN-END:variables
 }

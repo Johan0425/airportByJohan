@@ -17,8 +17,8 @@ public class Captain extends Employee {
     private final LSE<Flight> flights;
     private Cities location;
 
-    public Captain(String email, double salary, String id, String fullname, String username, String password) {
-        super(email, salary, Role.FLIGHT_CAPTAIN, id, fullname, username, password);
+    public Captain(String email, double salary, int age, String id, String fullname, String username, String password) {
+        super(email, salary, age, Role.FLIGHT_CAPTAIN, id, fullname, username, password);
         location = Cities.AXM;
         flights = new LSE<>();
     }

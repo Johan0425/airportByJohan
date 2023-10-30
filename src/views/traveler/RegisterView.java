@@ -44,12 +44,14 @@ public class RegisterView extends javax.swing.JInternalFrame {
         txtName.setEditable(true);
         txtUsername.setEditable(true);
         txtPassword.setEditable(true);
+        txtAge.setEditable(true);
     }
 
     private void noEditableFields() {
         txtName.setEditable(false);
         txtUsername.setEditable(false);
         txtPassword.setEditable(false);
+        txtAge.setEditable(false);
     }
 
 //    private void cleanFields() {
@@ -62,6 +64,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
         txtName.setText("");
         txtUsername.setText("");
         txtPassword.setText("");
+        txtAge.setText("");
     }
 
     private void fillFields(String id) {
@@ -70,7 +73,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
             txtName.setText(employee.getFullname());
             txtUsername.setText(employee.getUsername());
             txtPassword.setText(employee.getPassword());
-
+            txtAge.setText(String.valueOf(employee.getAge()));
         }
     }
 
@@ -178,7 +181,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
     }
 
     private boolean hasEmptyFields() {
-        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtUsername.getText().isEmpty()
+        return (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtUsername.getText().isEmpty() || txtAge.getText().isEmpty()
                 || txtPassword.getText().isEmpty());
     }
 
