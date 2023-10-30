@@ -39,6 +39,11 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         this.view = view;
         this.viewTasks = viewTasks;
         this.airline = airline;
+        hideWarning();
+    }
+
+    private void hideWarning() {
+        lblWarningRows.setVisible(false);
     }
 
     private void cleanFields() {
@@ -75,6 +80,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         txtRows = new javax.swing.JTextField();
         cbxNumCols = new javax.swing.JComboBox<>();
         btnPreviewAirplane = new javax.swing.JButton();
+        lblWarningRows = new javax.swing.JLabel();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -107,6 +113,9 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         txtRows.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         txtRows.setBorder(null);
         txtRows.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRowsKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtRowsKeyTyped(evt);
             }
@@ -127,6 +136,11 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
             }
         });
 
+        lblWarningRows.setBackground(new java.awt.Color(204, 0, 0));
+        lblWarningRows.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
+        lblWarningRows.setForeground(new java.awt.Color(255, 0, 0));
+        lblWarningRows.setText("Deben ser mas de 5 o menor a 11 filas");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -137,6 +151,11 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                         .addGap(351, 351, 351)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPreviewAirplane))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel1)
@@ -146,16 +165,14 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                                     .addComponent(txtModel)
                                     .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                                     .addComponent(txtRows, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                                    .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnPreviewAirplane))))
+                                    .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(47, 47, 47))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(530, 530, 530)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(422, Short.MAX_VALUE))
+                        .addGap(483, 483, 483)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblWarningRows)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(395, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +183,9 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                     .addComponent(txtModel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(42, 42, 42)
+                .addComponent(lblWarningRows)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(mainPanelLayout.createSequentialGroup()
@@ -181,7 +200,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPreviewAirplane, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,7 +221,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
         String rows = txtRows.getText();
         char c = evt.getKeyChar();
 
-        if (!Character.isDigit(c) || rows.length() == 3) {
+        if (!Character.isDigit(c) || rows.length() == 2) {
             evt.consume();
         }
     }//GEN-LAST:event_txtRowsKeyTyped
@@ -238,6 +257,20 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnPreviewAirplaneActionPerformed
 
+    private void txtRowsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRowsKeyReleased
+        String text = txtRows.getText();
+        try {
+            int value = Integer.parseInt(text);
+            if (value < 5) {
+                txtRows.setText("5");
+            } else if (value > 11) {
+                txtRows.setText("11");
+            }
+        } catch (NumberFormatException e) {
+            lblWarningRows.setVisible(true);
+        }
+    }//GEN-LAST:event_txtRowsKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -248,6 +281,7 @@ public class RegisterAirplane extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblWarningRows;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField txtModel;
     private javax.swing.JTextField txtRows;

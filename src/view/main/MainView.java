@@ -59,13 +59,19 @@ public class MainView extends javax.swing.JFrame {
         addAdmin();
     }
 
-    private void validateButton() {
+    public final void validateButton() {
 
-        User user = controller2.getUser();
+        try {
 
-        if (lblUserName.getText().isEmpty()) {
-            btnManagments.setVisible(false);
-        } else if (user == null) {
+            User user = controller2.getUser();
+
+            if (lblUserName.getText().isEmpty()) {
+                btnManagments.setVisible(false);
+            } else if (user == null) {
+                btnManagments.setVisible(false);
+            }
+
+        } catch (IllegalStateException ex) {
             btnManagments.setVisible(false);
         }
 

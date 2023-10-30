@@ -372,6 +372,7 @@ public class LoginView extends javax.swing.JInternalFrame {
                 controller.logout(username);
                 view.setLabelUserName("");
                 view.setLaberlAirline("");
+                view.validateButton();
                 JOptionPane.showMessageDialog(null, "Se cerró sesion correctamente");
             } else {
                 JOptionPane.showMessageDialog(null, "Debe iniciar sesión primero");
