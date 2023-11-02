@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import model.Airplane;
 import model.Seat;
 import singleton.Singleton;
 
@@ -15,8 +16,8 @@ public class PreviewAirplaneController {
 
     private final Seat seats[][];
 
-    public PreviewAirplaneController(int row, int column) {
-        seats = new Seat[row][column];
+    public PreviewAirplaneController(Airplane airplane) {
+        seats = new Seat[airplane.getNumRows()][airplane.getNumCols()];
         initSeats();
     }
 

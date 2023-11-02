@@ -170,6 +170,8 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -304,49 +306,57 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
 
         jSeparator7.setForeground(new java.awt.Color(0, 102, 153));
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(498, 498, 498)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(371, 371, 371)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel3)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(55, 55, 55))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(37, 37, 37)))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7))
                 .addGap(45, 45, 45)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator6)
-                    .addComponent(idWarning, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(phoneNumberWarning)
-                    .addComponent(usernameWarning)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator3)
-                    .addComponent(jSeparator4)
-                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator7))
-                .addGap(9, 9, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jSeparator6)
+                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(idWarning, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(phoneNumberWarning)
+                        .addComponent(usernameWarning)
+                        .addComponent(jSeparator2)
+                        .addComponent(jSeparator3)
+                        .addComponent(jSeparator4)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator7)))
+                .addGap(369, 378, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addGap(26, 26, 26))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(488, 488, 488)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,20 +373,20 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                        .addGap(3, 3, 3)))
-                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(60, 60, 60)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(60, 60, 60)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(phoneNumberWarning)
@@ -385,7 +395,7 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(60, 60, 60)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -397,13 +407,20 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
+                        .addGap(60, 60, 60)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(15, 15, 15))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -508,6 +525,8 @@ public class UpdateManagmentUserTraveler extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel idWarning;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

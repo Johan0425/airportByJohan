@@ -59,7 +59,7 @@ public class Airplanes extends javax.swing.JInternalFrame {
 
         LSE<Airplane> airplanes = controller.getAirplanes();
         model.setColumnIdentifiers(new Object[]{
-            "Modelo", "Número filas", "Número columnas", "Estado"
+            "id", "Modelo", "Número filas", "Número columnas", "Estado"
         });
 
         airplanesTable.setModel(model);
@@ -87,6 +87,7 @@ public class Airplanes extends javax.swing.JInternalFrame {
             }
 
             model.addRow(new Object[]{
+                airplanes.get(i).getId(),
                 airplanes.get(i).getModel(),
                 airplanes.get(i).getNumRows(),
                 airplanes.get(i).getNumCols(),
@@ -114,6 +115,9 @@ public class Airplanes extends javax.swing.JInternalFrame {
         btnGestion = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        btnPreviewAirplane = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -196,51 +200,83 @@ public class Airplanes extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
+        btnPreviewAirplane.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnPreviewAirplane.setForeground(new java.awt.Color(0, 102, 153));
+        btnPreviewAirplane.setText("PREVISUALIZAR");
+        btnPreviewAirplane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153), 2));
+        btnPreviewAirplane.setContentAreaFilled(false);
+        btnPreviewAirplane.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviewAirplaneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(jLabel1)
-                        .addGap(66, 66, 66)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator1)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100)
+                        .addGap(55, 55, 55)
                         .addComponent(btnGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103)
+                        .addGap(55, 55, 55)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(55, 55, 55)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(btnPreviewAirplane)))
                 .addContainerGap(127, Short.MAX_VALUE))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(207, 207, 207)
+                .addComponent(jLabel1)
+                .addGap(66, 66, 66)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator1)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addGap(80, 80, 80))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
+                .addGap(66, 66, 66)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(87, Short.MAX_VALUE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPreviewAirplane, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,8 +307,9 @@ public class Airplanes extends javax.swing.JInternalFrame {
 
         if (selected >= 0) {
 
-            String model = airplanesTable.getModel().getValueAt(selected, 0).toString();
-            Airplane airplane = controller.searchAirplane(model);
+            String value = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            int id = Integer.parseInt(value);
+            Airplane airplane = controller.searchAirplane(id);
 
             if (airplane != null) {
                 view.validateDesktop();
@@ -281,7 +318,7 @@ public class Airplanes extends javax.swing.JInternalFrame {
                 System.out.println("es null");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un empleado de la tabla");
+            JOptionPane.showMessageDialog(null, "Seleccione un avión de la tabla");
         }
     }//GEN-LAST:event_btnGestionActionPerformed
 
@@ -290,13 +327,15 @@ public class Airplanes extends javax.swing.JInternalFrame {
 
         if (selected >= 0) {
 
-            String model = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            String value = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            int id = Integer.parseInt(value);
+            String model = airplanesTable.getModel().getValueAt(selected, 1).toString();
 
             int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el avión con modelo "
                     + model + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (answer == 0) {
-                controller.deleteAirplane(model);
+                controller.deleteAirplane(id);
                 fillTable();
                 JOptionPane.showMessageDialog(null, "Avión eliminado correctamente");
             }
@@ -310,13 +349,15 @@ public class Airplanes extends javax.swing.JInternalFrame {
 
         if (selected >= 0) {
 
-            String model = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            String value = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            int id = Integer.parseInt(value);
+            String model = airplanesTable.getModel().getValueAt(selected, 1).toString();
 
             int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el avión con modelo "
                     + model + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (answer == 0) {
-                controller.deleteAirplane(model);
+                controller.deleteAirplane(id);
                 fillTable();
                 JOptionPane.showMessageDialog(null, "Avión eliminado correctamente");
             }
@@ -325,13 +366,41 @@ public class Airplanes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnPreviewAirplaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewAirplaneActionPerformed
+        int selected = airplanesTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            String value = airplanesTable.getModel().getValueAt(selected, 0).toString();
+            int id = Integer.parseInt(value);
+
+            Airplane airplane = controller.searchAirplane(id);
+
+            if (airplane != null) {
+
+                int groupSeats = airplane.getNumCols() / 2;
+                view.validateDesktop();
+                view.openPreviewPlane(groupSeats, airplane);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el avión");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un avión de la tabla para previsualizar");
+        }
+
+    }//GEN-LAST:event_btnPreviewAirplaneActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable airplanesTable;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnGestion;
     private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnPreviewAirplane;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

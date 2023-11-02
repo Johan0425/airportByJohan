@@ -4,6 +4,7 @@
  */
 package model;
 
+import enums.Cities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,14 +20,14 @@ public class Flight implements Serializable {
     private final int id;
     private final LocalTime endTime;
     private Airplane airplane;
-    private Employee captain;
+    private Captain captain;
     private LocalDate date;
     private LocalTime hour;
     private int aproximateTime;
-    private String origin;
-    private String destination;
+    private Cities origin;
+    private Cities destination;
 
-    public Flight(Employee captain, Airplane airplane, LocalDate date, LocalTime hour, int aproximateTime, String origin, String destination) {
+    public Flight(Captain captain, Airplane airplane, LocalDate date, LocalTime hour, int aproximateTime, Cities origin, Cities destination) {
         this.captain = captain;
         this.airplane = airplane;
         this.date = date;
@@ -46,11 +47,11 @@ public class Flight implements Serializable {
         return id;
     }
 
-    public Employee getCaptain() {
+    public Captain getCaptain() {
         return captain;
     }
 
-    public void setCaptain(Employee captain) {
+    public void setCaptain(Captain captain) {
         this.captain = captain;
     }
 
@@ -86,22 +87,23 @@ public class Flight implements Serializable {
         this.aproximateTime = aproximateTime;
     }
 
-    public String getOrigin() {
+    public Cities getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Cities origin) {
         this.origin = origin;
     }
 
-    public String getDestination() {
+    public Cities getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Cities destination) {
         this.destination = destination;
     }
 
+    
     private int generateId() {
         Set<Integer> ids = Singleton.getINSTANCE().getFlightsIDs();
 

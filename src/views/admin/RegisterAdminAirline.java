@@ -231,6 +231,8 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
+        jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -349,6 +351,14 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -410,7 +420,12 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addGap(71, 71, 71)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(161, 161, 161)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2))
                             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jSeparator8)
                                 .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -478,9 +493,16 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
                         .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(93, 93, 93)
-                .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(btnAddAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3)
+                            .addComponent(jButton2))
+                        .addGap(25, 25, 25))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -570,6 +592,8 @@ public class RegisterAdminAirline extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAddAdmin;
     private javax.swing.JButton btnClose;
     private javax.swing.JLabel idAdminWarning;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

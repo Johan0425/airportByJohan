@@ -43,9 +43,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                  <Component id="btnFlights" min="-2" pref="169" max="-2" attributes="0"/>
-                  <EmptySpace pref="556" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="btnFlights" min="-2" pref="187" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="btnMaintenance" min="-2" pref="244" max="-2" attributes="0"/>
+                  <EmptySpace pref="276" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -54,15 +56,13 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnFlights" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="btnFlights" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="btnMaintenance" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Component id="dsMain" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -117,6 +117,26 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFlightsActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMaintenance">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="66" red="0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial Rounded MT Bold" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Solicitar mantenimiento"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMaintenanceActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

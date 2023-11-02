@@ -48,8 +48,8 @@ public class AirlineAdminTasks extends javax.swing.JInternalFrame {
 
     }
 
-    public void openPreviewPlane(int row, int groupSeats, Airline airline, Airplanes viewAirplanes) {
-        PreviewAirplane view = new PreviewAirplane(this, row, groupSeats, airline, viewAirplanes);
+    public void openPreviewPlane(int groupSeats, Airplane airplane) {
+        PreviewAirplane view = new PreviewAirplane(groupSeats, airplane);
         dsMain.add(view);
         view.setVisible(true);
     }

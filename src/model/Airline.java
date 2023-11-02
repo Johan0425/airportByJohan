@@ -31,7 +31,7 @@ public class Airline implements Serializable {
     public LSE<Flight> getFlights() {
         return flights;
     }
-    
+
     public LSE<Employee> getEmployees() {
         return employees;
     }
@@ -115,9 +115,9 @@ public class Airline implements Serializable {
         return null;
     }
 
-    public Airplane searchAirplane(String model) {
+    public Airplane searchAirplane(int id) {
         for (int i = 0; i < airplanes.size(); i++) {
-            if (airplanes.get(i).getModel().equals(model)) {
+            if (airplanes.get(i).getId() == id) {
                 return airplanes.get(i);
             }
         }
@@ -129,7 +129,7 @@ public class Airline implements Serializable {
     }
 
     public boolean updateAirplane(Airplane airplane) {
-        Airplane aux = searchAirplane(airplane.getModel());
+        Airplane aux = searchAirplane(airplane.getId());
         boolean wasEdited = false;
 
         if (aux.getNumRows() != airplane.getNumRows()) {
@@ -156,10 +156,10 @@ public class Airline implements Serializable {
         return wasEdited;
     }
 
-    public Airplane deleteAirplane(String model) {
+    public Airplane deleteAirplane(int id) {
         for (int i = 0; i < airplanes.size(); i++) {
             Airplane aux = airplanes.get(i);
-            if (aux.getModel().equals(model)) {
+            if (aux.getId() == id) {
                 airplanes.remove(i);
                 Singleton.getINSTANCE().writeAirline();
                 return aux;
@@ -180,20 +180,38 @@ public class Airline implements Serializable {
 
     public void addFlight(Flight flight) {
         flights.addDato(flight);
+        flight.getCaptain().getFlights().addDato(flight);
+        flight.getAirplane().getFlights().addDato(flight);
         Singleton.getINSTANCE().writeAirline();
+        Singleton.getINSTANCE().writeUser();
     }
 
-    public boolean updateFlight(Flight flight) {
-        Flight aux = searchFlight(flight.getId());
+    public boolean updateFlight(Flight flight, int flightId) {
+        Flight aux = searchFlight(flightId);
         boolean wasEdited = false;
 
         if (!aux.getCaptain().getId().equals(flight.getCaptain().getId())) {
+
+            for (int i = 0; i < aux.getCaptain().getFlights().size(); i++) {
+                if (aux.getCaptain().getFlights().get(i).getId() == flightId) {
+                    aux.getCaptain().getFlights().remove(i);
+                }
+            }
             aux.setCaptain(flight.getCaptain());
+            flight.getCaptain().getFlights().addDato(aux);
             wasEdited = true;
+
         }
 
         if (!aux.getAirplane().getModel().equals(flight.getAirplane().getModel())) {
+
+            for (int i = 0; i < aux.getAirplane().getFlights().size(); i++) {
+                if (aux.getAirplane().getFlights().get(i).getId() == flightId) {
+                    aux.getAirplane().getFlights().remove(i);
+                }
+            }
             aux.setAirplane(flight.getAirplane());
+            flight.getAirplane().getFlights().addDato(aux);
             wasEdited = true;
         }
 
@@ -222,6 +240,7 @@ public class Airline implements Serializable {
             wasEdited = true;
         }
 
+        Singleton.getINSTANCE().writeUser();
         Singleton.getINSTANCE().writeAirline();
 
         return wasEdited;

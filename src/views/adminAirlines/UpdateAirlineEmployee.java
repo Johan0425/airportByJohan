@@ -216,6 +216,8 @@ public class UpdateAirlineEmployee extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         txtAge = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -335,12 +337,20 @@ public class UpdateAirlineEmployee extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(544, Short.MAX_VALUE)
+                .addContainerGap(341, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -391,6 +401,10 @@ public class UpdateAirlineEmployee extends javax.swing.JInternalFrame {
                                             .addComponent(cbxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(495, 495, 495))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addGap(200, 200, 200)
                         .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(646, 646, 646))))
         );
@@ -451,8 +465,12 @@ public class UpdateAirlineEmployee extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -542,6 +560,8 @@ public class UpdateAirlineEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnUpdateEmployee;
     private javax.swing.JComboBox<String> cbxRole;
     private javax.swing.JLabel idWarning;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

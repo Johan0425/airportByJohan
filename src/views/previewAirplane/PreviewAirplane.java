@@ -6,14 +6,11 @@ package views.previewAirplane;
 
 import controllers.PreviewAirplaneController;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import model.Airline;
-import views.adminAirlines.AirlineAdminTasks;
-import views.adminAirlines.Airplanes;
+import model.Airplane;
 
 /**
  *
@@ -23,34 +20,25 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
 
     private final JButton[][] seats;
     private final PreviewAirplaneController controller;
-    private final AirlineAdminTasks view;
-    private final int groupSeats;
-    private final Airline airline;
-    private final Airplanes viewAirplanes;
+    private final Airplane airplane;
 
     /**
      * Creates new form PreviewAirplane
      *
-     * @param view
-     * @param row
      * @param groupSeats
-     * @param airline
-     * @param viewAirplanes
+     * @param airplane
      */
-    public PreviewAirplane(AirlineAdminTasks view, int row, int groupSeats, Airline airline, Airplanes viewAirplanes) {
+    public PreviewAirplane(int groupSeats, Airplane airplane) {
         initComponents();
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         setResizable(false);
         setSize(1200, 700);
-        controller = new PreviewAirplaneController(row, 6);
-        seats = new JButton[row][6];
-        this.view = view;
-        this.groupSeats = groupSeats;
-        this.airline = airline;
-        this.viewAirplanes = viewAirplanes;
+        seats = new JButton[airplane.getNumRows()][airplane.getNumCols()];
         valideGroupSeats(groupSeats);
+        this.airplane = airplane;
+        controller = new PreviewAirplaneController(airplane);
 
     }
 
@@ -86,7 +74,7 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
                 seats[i][j].addActionListener(this);
                 panelSeats.add(seats[i][j]);
 
-                if (j == seats[i].length / 3 - 1 | j == seats[i].length / 1 - 3) {
+                if (j == seats[i].length / 1 - 3 | j == seats[i].length / 1 - 3) {
                     x += width + 2 * separated;
                 } else {
                     x += width + separated2;
@@ -153,7 +141,6 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
 
         jPanel1 = new javax.swing.JPanel();
         panelSeats = new javax.swing.JPanel();
-        btnClose = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -171,18 +158,6 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
             .addGap(0, 600, Short.MAX_VALUE)
         );
 
-        btnClose.setBackground(new java.awt.Color(255, 255, 255));
-        btnClose.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
-        btnClose.setForeground(new java.awt.Color(0, 102, 153));
-        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/close.png"))); // NOI18N
-        btnClose.setBorder(null);
-        btnClose.setContentAreaFilled(false);
-        btnClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,17 +165,13 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(166, Short.MAX_VALUE)
                 .addComponent(panelSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(135, 135, 135)
-                .addComponent(btnClose)
-                .addGap(14, 14, 14))
+                .addGap(181, 181, 181))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(76, Short.MAX_VALUE))
         );
 
@@ -218,14 +189,8 @@ public class PreviewAirplane extends javax.swing.JInternalFrame implements Actio
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        view.validateDesktop();
-        view.openRegisterAirplane(airline, viewAirplanes);
-    }//GEN-LAST:event_btnCloseActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClose;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelSeats;
     // End of variables declaration//GEN-END:variables

@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 import model.Airline;
+import model.Chat;
 import model.Seat;
 import model.User;
 import util.LSE;
@@ -24,7 +25,10 @@ public class Singleton {
 
     private static final Singleton INSTANCE = new Singleton();
 
+    private final Set<Integer> maintenanceId;
     private final Set<Integer> flightsIDs;
+    private final Set<Integer> airplaneIds;
+    private final Chat chat;
     private final LSE<User> users;
     private final LSE<Airline> airlines;
     private final Seat seats[][];
@@ -32,7 +36,10 @@ public class Singleton {
     private User user;
 
     private Singleton() {
+        maintenanceId = readMaintenanceIDs();
+        airplaneIds = readAirplaneIDs();
         flightsIDs = readFlightsIDs();
+        chat = readChat();
         users = readUsers();
         airlines = readAirlines();
         seats = readSeats();
@@ -40,6 +47,18 @@ public class Singleton {
 
     public static Singleton getINSTANCE() {
         return INSTANCE;
+    }
+
+    public Set<Integer> getAirplaneIds() {
+        return airplaneIds;
+    }
+
+    public Set<Integer> getMaintenanceId() {
+        return maintenanceId;
+    }
+
+    public Chat getChat() {
+        return chat;
     }
 
     public Set<Integer> getFlightsIDs() {
@@ -142,6 +161,63 @@ public class Singleton {
     private Set<Integer> readFlightsIDs() {
         try {
             FileInputStream file = new FileInputStream("flightsIDs.dat");
+            ObjectInputStream reader = new ObjectInputStream(file);
+            return (Set<Integer>) reader.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            return new HashSet<>();
+        }
+    }
+
+    public void writeAirplaneID() {
+        try {
+            FileOutputStream file = new FileOutputStream("airplaneIds.dat");
+            ObjectOutputStream writer = new ObjectOutputStream(file);
+            writer.writeObject(airplaneIds);
+        } catch (IOException ex) {
+        }
+    }
+
+    private Set<Integer> readAirplaneIDs() {
+        try {
+            FileInputStream file = new FileInputStream("airplaneIds.dat");
+            ObjectInputStream reader = new ObjectInputStream(file);
+            return (Set<Integer>) reader.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            return new HashSet<>();
+        }
+    }
+
+    public void writeChat() {
+        try {
+            FileOutputStream archivo = new FileOutputStream("chat.dat");
+            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
+            escritor.writeObject(chat);
+        } catch (IOException ex) {
+        }
+    }
+
+    private Chat readChat() {
+        try {
+            FileInputStream archivo = new FileInputStream("chat.dat");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            return (Chat) lector.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            return new Chat();
+        }
+    }
+
+    public void writeMaintenanceId() {
+        try {
+            FileOutputStream file = new FileOutputStream("maintenanceid.dat");
+            ObjectOutputStream writer = new ObjectOutputStream(file);
+            writer.writeObject(maintenanceId);
+        } catch (IOException ex) {
+        }
+    }
+
+    private Set<Integer> readMaintenanceIDs() {
+        try {
+            FileInputStream file = new FileInputStream("maintenanceid.dat");
             ObjectInputStream reader = new ObjectInputStream(file);
             return (Set<Integer>) reader.readObject();
         } catch (IOException | ClassNotFoundException ex) {

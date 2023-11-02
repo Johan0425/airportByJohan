@@ -78,6 +78,8 @@ public class UpdateAirplane extends javax.swing.JInternalFrame {
         txtModel = new javax.swing.JTextField();
         txtRows = new javax.swing.JTextField();
         cbxNumCols = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -119,32 +121,46 @@ public class UpdateAirplane extends javax.swing.JInternalFrame {
         cbxNumCols.setForeground(new java.awt.Color(0, 102, 153));
         cbxNumCols.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción:", "2", "3" }));
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtModel)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(txtRows, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(530, 530, 530)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(422, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(522, 522, 522))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addGap(351, 351, 351)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtModel)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(txtRows, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(cbxNumCols, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addGap(530, 530, 530)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)))
+                .addContainerGap(422, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +184,11 @@ public class UpdateAirplane extends javax.swing.JInternalFrame {
                     .addComponent(cbxNumCols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(97, 97, 97)
                 .addComponent(btnUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(79, 79, 79))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,6 +240,8 @@ public class UpdateAirplane extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUpdated;
     private javax.swing.JComboBox<String> cbxNumCols;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

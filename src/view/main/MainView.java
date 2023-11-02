@@ -29,6 +29,7 @@ import view.login.LoginView;
 import views.admin.AdminTasks;
 import views.adminAirlines.AirlineAdminTasks;
 import views.logisticsEmployee.LogisticsEmployeeTasks;
+import views.traveler.ActionsTraveler;
 import views.traveler.RegisterView;
 import views.traveler.UpdateManagmentUserTraveler;
 
@@ -56,7 +57,33 @@ public class MainView extends javax.swing.JFrame {
         controller2 = new LoginController();
         hidePanelMenu();
         validateButton();
+        validateRegisterButton();
+        validateButtonActions();
         addAdmin();
+    }
+
+    public final void validateButtonActions() {
+
+        try {
+
+            User user = controller2.getUser();
+            if (user != null && user.getRole().equals(Role.TRAVELER)) {
+                btnActions.setVisible(true);
+            } else {
+                btnActions.setVisible(false);
+            }
+        } catch (IllegalStateException e) {
+            btnActions.setVisible(false);
+
+        }
+    }
+
+    public final void validateRegisterButton() {
+        if (!lblUserName.getText().isEmpty()) {
+            btnRegister.setVisible(false);
+        } else {
+            btnRegister.setVisible(true);
+        }
     }
 
     public final void validateButton() {
@@ -267,6 +294,13 @@ public class MainView extends javax.swing.JFrame {
         view.setVisible(true);
     }
 
+    public void openActionsTravelerView() {
+        validateDesktop();
+        ActionsTraveler view = new ActionsTraveler();
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,8 +328,9 @@ public class MainView extends javax.swing.JFrame {
         panelMenu = new javax.swing.JPanel();
         btnHome = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
-        btnAirlines = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
         btnManagments = new javax.swing.JButton();
+        btnActions = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -414,16 +449,16 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        btnAirlines.setBackground(new java.awt.Color(255, 255, 255));
-        btnAirlines.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        btnAirlines.setForeground(new java.awt.Color(0, 0, 0));
-        btnAirlines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
-        btnAirlines.setText("       REGISTRO");
-        btnAirlines.setBorder(null);
-        btnAirlines.setContentAreaFilled(false);
-        btnAirlines.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setBackground(new java.awt.Color(255, 255, 255));
+        btnRegister.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        btnRegister.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
+        btnRegister.setText("       REGISTRO");
+        btnRegister.setBorder(null);
+        btnRegister.setContentAreaFilled(false);
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAirlinesActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -440,6 +475,19 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        btnActions.setBackground(new java.awt.Color(255, 255, 255));
+        btnActions.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        btnActions.setForeground(new java.awt.Color(0, 0, 0));
+        btnActions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/people.png"))); // NOI18N
+        btnActions.setText("      ACCIONES");
+        btnActions.setBorder(null);
+        btnActions.setContentAreaFilled(false);
+        btnActions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
@@ -449,8 +497,9 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAirlines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManagments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManagments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                    .addComponent(btnActions, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelMenuLayout.setVerticalGroup(
@@ -460,10 +509,12 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAirlines, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnManagments, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 717, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnActions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 653, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -521,9 +572,9 @@ public class MainView extends javax.swing.JFrame {
         openLoginView();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnAirlinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlinesActionPerformed
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         openRegisterView();
-    }//GEN-LAST:event_btnAirlinesActionPerformed
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnManagmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagmentsActionPerformed
         try {
@@ -594,13 +645,18 @@ public class MainView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSettingsMouseClicked
 
+    private void btnActionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionsActionPerformed
+        openActionsTravelerView();
+    }//GEN-LAST:event_btnActionsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAirlines;
+    private javax.swing.JButton btnActions;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnManagments;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnSettings;
     private javax.swing.JDesktopPane dsMain;
     private javax.swing.JLabel jLabel3;

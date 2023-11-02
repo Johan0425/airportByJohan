@@ -4,6 +4,10 @@
  */
 package controllers;
 
+import enums.Event;
+import static enums.Event.ADD;
+import static enums.Event.DELETE;
+import static enums.Event.UPDATE;
 import model.Airline;
 import model.Employee;
 import singleton.Singleton;
@@ -22,6 +26,40 @@ public class AirlineEmployeeController extends EmployeesController {
     }
 
     @Override
+    public void applyZ(Event evt, Employee employee) {
+        switch (evt) {
+            case ADD:
+                deleteEmployee(employee.getId());
+                break;
+            case UPDATE:
+                updateEmployee(employee);
+                break;
+            case DELETE:
+                addEmployee(employee);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void applyY(Event evt, Employee employee) {
+        switch (evt) {
+            case ADD:
+                addEmployee(employee);
+                break;
+            case UPDATE:
+                updateEmployee(employee);
+                break;
+            case DELETE:
+                deleteEmployee(employee.getId());
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public LSE<Employee> getEmployees() {
         return airline.getEmployees();
     }
@@ -33,7 +71,7 @@ public class AirlineEmployeeController extends EmployeesController {
         Singleton.getINSTANCE().writeUser();
 
     }
-    
+
     @Override
     public void addEmployee(Employee employee) {
         airline.addEmployee(employee);

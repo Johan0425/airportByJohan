@@ -127,6 +127,8 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
+        jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -240,6 +242,14 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -251,60 +261,65 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator3)
-                                    .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idAdminWarning)
-                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jSeparator1)
-                                        .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(usernameWarning)
-                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jSeparator5)
-                                        .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(112, 112, 112)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator6)
-                                    .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator2)
-                                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(498, 498, 498)
-                        .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(378, 378, 378)
                         .addComponent(jLabel8)
                         .addGap(87, 87, 87)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator8)
-                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                            .addGap(498, 498, 498)
+                            .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton2))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                            .addGap(177, 177, 177)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSeparator3)
+                                        .addComponent(txtAdminEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(idAdminWarning)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator1)
+                                            .addComponent(txtAdminId, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(usernameWarning)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator5)
+                                            .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(112, 112, 112)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSeparator4)
+                                        .addComponent(txtAdminSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSeparator6)
+                                        .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSeparator2)
+                                        .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(228, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -358,14 +373,21 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
                             .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(86, 86, 86)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
-                .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(2, 2, 2)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(101, 101, 101)
+                        .addComponent(btnUpdateAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(57, 57, 57))
         );
 
@@ -477,6 +499,8 @@ public class UpdateMaintenanceManager extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnUpdateAdmin;
     private javax.swing.JLabel idAdminWarning;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

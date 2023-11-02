@@ -230,8 +230,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnLogin" max="32767" attributes="0"/>
-                          <Component id="btnAirlines" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnRegister" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnManagments" alignment="1" pref="236" max="32767" attributes="0"/>
+                          <Component id="btnActions" alignment="0" pref="236" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -244,10 +245,12 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnLogin" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnAirlines" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="btnRegister" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnManagments" min="-2" pref="58" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="717" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnActions" min="-2" pref="58" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="653" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -301,7 +304,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAirlines">
+            <Component class="javax.swing.JButton" name="btnRegister">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -322,7 +325,7 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAirlinesActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnManagments">
@@ -347,6 +350,30 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManagmentsActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnActions">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial Rounded MT Bold" size="24" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/people.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="      ACCIONES"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="contentAreaFilled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActionsActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

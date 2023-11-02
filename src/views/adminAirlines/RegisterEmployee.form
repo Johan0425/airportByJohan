@@ -46,7 +46,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="544" max="32767" attributes="0"/>
+                  <EmptySpace pref="407" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -60,7 +60,7 @@
                                   <EmptySpace min="147" pref="147" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="idWarning" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                           <Component id="jSeparator7" alignment="1" min="-2" pref="243" max="-2" attributes="0"/>
                                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
@@ -71,7 +71,7 @@
                                               <Component id="txtName" alignment="0" min="-2" pref="243" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <Component id="lblEmployeeFound" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jSeparator1" max="32767" attributes="0"/>
@@ -110,20 +110,24 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="495" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnAddEmployee" min="-2" pref="130" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="660" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="406" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="idWarning" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -152,7 +156,7 @@
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="txtAge" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
@@ -170,7 +174,7 @@
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbxRole" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="usernameWarning" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -185,10 +189,18 @@
                       <Component id="txtPassword" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jSeparator7" min="-2" pref="10" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                  <Component id="btnAddEmployee" min="-2" pref="37" max="-2" attributes="0"/>
-                  <EmptySpace pref="58" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jSeparator7" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="btnAddEmployee" min="-2" pref="37" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButton3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="84" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -457,6 +469,28 @@
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAgeKeyTyped"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icon/redo.png"/>
+            </Property>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icon/undo.png"/>
+            </Property>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

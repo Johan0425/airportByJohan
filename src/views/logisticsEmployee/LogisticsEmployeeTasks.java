@@ -9,6 +9,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Airline;
+import model.Flight;
 
 /**
  *
@@ -41,14 +42,26 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
 
     }
 
+    public void openUpdatedFlightView(Airline airline, Flight flight, Flights view2) {
+        UpdateFlight view = new UpdateFlight(airline, flight, view2, this);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
+    public void openMaintenanceView() {
+        MaintenanceAirplane view = new MaintenanceAirplane(this);
+        dsMain.add(view);
+        view.setVisible(true);
+    }
+
     public void openFlights() {
         Flights view = new Flights(airline, this);
         dsMain.add(view);
         view.setVisible(true);
     }
-    
+
     public void openRegisterFlight(Airline airline, Flights view2) {
-        RegisterFlight view = new RegisterFlight(airline, view2);
+        RegisterFlight view = new RegisterFlight(airline, view2, this);
         dsMain.add(view);
         view.setVisible(true);
     }
@@ -72,6 +85,7 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
         };
         jLabel1 = new javax.swing.JLabel();
         btnFlights = new javax.swing.JButton();
+        btnMaintenance = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -101,6 +115,17 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
             }
         });
 
+        btnMaintenance.setBackground(new java.awt.Color(0, 102, 153));
+        btnMaintenance.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnMaintenance.setForeground(new java.awt.Color(255, 255, 255));
+        btnMaintenance.setText("Solicitar mantenimiento");
+        btnMaintenance.setBorder(null);
+        btnMaintenance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaintenanceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -109,9 +134,11 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addComponent(jLabel1)
-                .addGap(72, 72, 72)
-                .addComponent(btnFlights, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(556, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(btnFlights, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnMaintenance, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(276, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +149,9 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addGap(21, 21, 21))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(btnFlights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnFlights, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMaintenance, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(dsMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -146,9 +175,15 @@ public class LogisticsEmployeeTasks extends javax.swing.JInternalFrame {
         openFlights();
     }//GEN-LAST:event_btnFlightsActionPerformed
 
+    private void btnMaintenanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaintenanceActionPerformed
+        validateDesktop();
+        openMaintenanceView();
+    }//GEN-LAST:event_btnMaintenanceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFlights;
+    private javax.swing.JButton btnMaintenance;
     private javax.swing.JDesktopPane dsMain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPanel;

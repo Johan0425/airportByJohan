@@ -231,6 +231,8 @@ public class RegisterView extends javax.swing.JInternalFrame {
         jSeparator10 = new javax.swing.JSeparator();
         jSeparator11 = new javax.swing.JSeparator();
         jSeparator12 = new javax.swing.JSeparator();
+        jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -365,14 +367,18 @@ public class RegisterView extends javax.swing.JInternalFrame {
 
         jSeparator12.setForeground(new java.awt.Color(0, 102, 153));
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/undo.png"))); // NOI18N
+        jButton3.setContentAreaFilled(false);
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/redo.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClose)
-                .addGap(26, 26, 26))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,8 +406,7 @@ public class RegisterView extends javax.swing.JInternalFrame {
                                             .addGap(47, 47, 47))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
                                             .addGap(2, 2, 2)
-                                            .addComponent(jLabel7)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(jLabel7)))
                                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(mainPanelLayout.createSequentialGroup()
                                             .addGap(35, 35, 35)
@@ -428,6 +433,17 @@ public class RegisterView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblEmployeeFound)
                 .addContainerGap(250, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnClose)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addGap(205, 205, 205))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +497,11 @@ public class RegisterView extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79)
                 .addComponent(btnSingUp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209))
+                .addGap(26, 26, 26)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(108, 108, 108))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -579,6 +599,8 @@ public class RegisterView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSingUp;
     private javax.swing.JLabel idWarning;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

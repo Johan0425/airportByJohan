@@ -7,6 +7,8 @@ package model;
 import enums.AirplaneStatus;
 import enums.Cities;
 import java.io.Serializable;
+import java.util.Set;
+import singleton.Singleton;
 import util.LSE;
 
 /**
@@ -14,6 +16,8 @@ import util.LSE;
  * @author joanp
  */
 public class Airplane implements Serializable {
+
+    private final int id;
 
     private final LSE<Flight> flights;
     private final Airline airline;
@@ -32,6 +36,11 @@ public class Airplane implements Serializable {
         location = Cities.AXM;
         flights = new LSE<>();
         status = AirplaneStatus.AVAILABLE;
+        id = generateId();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public LSE<Flight> getFlights() {
@@ -88,6 +97,20 @@ public class Airplane implements Serializable {
 
     public void setLocation(Cities location) {
         this.location = location;
+    }
+
+    private int generateId() {
+        Set<Integer> ids = Singleton.getINSTANCE().getAirplaneIds();
+
+        int id = 1;
+        while (ids.contains(id)) {
+            id++;
+        }
+
+        ids.add(id);
+        Singleton.getINSTANCE().writeAirplaneID();
+
+        return id;
     }
 
 }

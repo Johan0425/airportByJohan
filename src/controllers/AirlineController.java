@@ -4,13 +4,17 @@
  */
 package controllers;
 
+import enums.Event;
+import static enums.Event.ADD;
+import static enums.Event.DELETE;
+import static enums.Event.UPDATE;
 import exceptions.AirlineAlreadyRegisteredException;
 import exceptions.AirlineNameInUseException;
 import model.Airline;
 import model.Employee;
-import model.User;
 import singleton.Singleton;
 import util.LSE;
+import util.Stack;
 
 /**
  *
@@ -20,8 +24,59 @@ public class AirlineController extends BaseController {
 
     private final LSE<Airline> airlines;
 
+    private Stack<Airline> Z;
+    private Stack<Airline> Y;
+
     public AirlineController() {
         airlines = Singleton.getINSTANCE().getAirlines();
+        Z = new Stack<>();
+        Y = new Stack<>();
+    }
+
+    public void addToZ(Airline airline) {
+        Z.push(airline);
+    }
+
+    public void activateZ(Event evt, Employee admin) {
+        Airline air = Z.pop();
+        applyZ(evt, air, admin);
+        Y.push(air);
+    }
+
+    public void activateY(Event evt, Employee admin) {
+        Airline air = Y.pop();
+        applyY(evt, air, admin);
+        Z.push(air);
+    }
+
+    private void applyZ(Event evt, Airline airline, Employee admin) {
+        switch (evt) {
+            case ADD:
+                deleteAirline(airline.getName());
+                break;
+            case UPDATE:
+                break;
+            case DELETE:
+                addAirline(airline, admin);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void applyY(Event evt, Airline airline, Employee admin) {
+        switch (evt) {
+            case ADD:
+                addAirline(airline, admin);
+                break;
+            case UPDATE:
+                break;
+            case DELETE:
+                deleteAirline(airline.getName());
+                break;
+            default:
+                break;
+        }
     }
 
     public LSE<Airline> getAirlines() {

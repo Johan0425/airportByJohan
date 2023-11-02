@@ -249,6 +249,8 @@ public class HasMultiUserView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null, "Bienvenido admin general" + user.getFullname());
         view.setLabelUserName(user.getUsername());
         view.validateBtnManagmentGeneralAdmin(userLoggued);
+        view.validateRegisterButton();
+        view.validateButtonActions();
         view.validateDesktop();
     }//GEN-LAST:event_btnGeneralAdminActionPerformed
 
@@ -256,8 +258,10 @@ public class HasMultiUserView extends javax.swing.JInternalFrame {
         User userLoggued = controller2.getUser();
         JOptionPane.showMessageDialog(null, "Bienvenido vieajero " + userLoggued.getFullname());
         view.setLabelUserName(userLoggued.getUsername());
-        view.validateDesktop();
+        view.validateRegisterButton();
         view.validateBtnForEmployess();
+        view.validateButtonActions();
+        view.validateDesktop();
     }//GEN-LAST:event_btnTravelerActionPerformed
 
     private void btnAirlineAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAirlineAdminActionPerformed
@@ -268,6 +272,9 @@ public class HasMultiUserView extends javax.swing.JInternalFrame {
         view.setLaberlAirline(airline.getName());
         JOptionPane.showMessageDialog(null, "Bienvenido admin de aerolinea " + userLogged.getFullname());
         view.validateBtnManagmentAirlineAdmin((Employee) userLogged, airline);
+        view.validateRegisterButton();
+        view.validateButtonActions();
+        view.validateDesktop();
     }//GEN-LAST:event_btnAirlineAdminActionPerformed
 
     private void btnLogisticsEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogisticsEmployeeActionPerformed
@@ -275,25 +282,30 @@ public class HasMultiUserView extends javax.swing.JInternalFrame {
         Airline airline = controller2.searchAirline(user.getId());
         JOptionPane.showMessageDialog(null, "Bienvenido empleado de logística" + userLoggued.getFullname());
         view.setLabelUserName(userLoggued.getUsername());
-        view.validateDesktop();
+        view.setLaberlAirline(airline.getName());
         view.validateBtnForLogisticEmployee(airline);
+        view.validateRegisterButton();
+        view.validateDesktop();
     }//GEN-LAST:event_btnLogisticsEmployeeActionPerformed
 
     private void btnMaintenanceManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaintenanceManagerActionPerformed
         User userLoggued = controller2.getUser();
         JOptionPane.showMessageDialog(null, "Bienvenido gestor de mantenimiento" + userLoggued.getFullname());
         view.setLabelUserName(userLoggued.getUsername());
-        view.validateDesktop();
         view.validateBtnForEmployess();
-
+        view.validateRegisterButton();
+        view.validateButtonActions();
+        view.validateDesktop();
     }//GEN-LAST:event_btnMaintenanceManagerActionPerformed
 
     private void btnFlightCaptainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlightCaptainActionPerformed
         User userLoggued = controller2.getUser();
         JOptionPane.showMessageDialog(null, "Bienvenido capitan" + userLoggued.getFullname());
         view.setLabelUserName(userLoggued.getUsername());
-        view.validateDesktop();
         view.validateBtnForEmployess();
+        view.validateRegisterButton();
+        view.validateButtonActions();
+        view.validateDesktop();
     }//GEN-LAST:event_btnFlightCaptainActionPerformed
 
 

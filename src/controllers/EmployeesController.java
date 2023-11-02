@@ -4,16 +4,77 @@
  */
 package controllers;
 
+import enums.Event;
+import static enums.Event.ADD;
+import static enums.Event.DELETE;
+import static enums.Event.UPDATE;
 import exceptions.UserAlreadyRegisteredException;
 import model.Employee;
 import singleton.Singleton;
 import util.LSE;
+import util.Stack;
 
 /**
  *
  * @author joanp
  */
 public class EmployeesController extends BaseController {
+
+    private Stack<Employee> Z;
+    private Stack<Employee> Y;
+
+    public EmployeesController() {
+        Z = new Stack<>();
+        Y = new Stack<>();
+    }
+
+    public void addToZ(Employee employee) {
+        Z.push(employee);
+    }
+
+    public void activateZ(Event evt) {
+        Employee emp = Z.pop();
+        applyZ(evt, emp);
+        Y.push(emp);
+    }
+
+    public void activateY(Event evt) {
+        Employee emp = Y.pop();
+        applyY(evt, emp);
+        Z.push(emp);
+    }
+
+    public void applyZ(Event evt, Employee employee) {
+        switch (evt) {
+            case ADD:
+                deleteEmployeeFromSingleton(employee.getId());
+                break;
+            case UPDATE:
+                updateEmployee(employee);
+                break;
+            case DELETE:
+                addEmployee(employee);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void applyY(Event evt, Employee employee) {
+        switch (evt) {
+            case ADD:
+                addEmployee(employee);
+                break;
+            case UPDATE:
+                updateEmployee(employee);
+                break;
+            case DELETE:
+                deleteEmployeeFromSingleton(employee.getId());
+                break;
+            default:
+                break;
+        }
+    }
 
     public LSE<Employee> getEmployees() {
         LSE<Employee> employees = new LSE<>();
@@ -42,6 +103,8 @@ public class EmployeesController extends BaseController {
             throw new UserAlreadyRegisteredException(employee.getId());
         }
     }
+    
+    //recordar poner tambien para edad y numero de telefono
 
     public boolean updateEmployee(Employee employee) {
         Employee aux = searchEmployee(employee.getId());
@@ -75,15 +138,18 @@ public class EmployeesController extends BaseController {
         }
     }
 
-    public void deleteEmployeeFromSingleton(String id) {
+    public Employee deleteEmployeeFromSingleton(String id) {
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i) instanceof Employee employee) {
-                if (employee.getId().equals(id)) {
+            if (users.get(i) instanceof Employee) {
+                Employee aux = (Employee) users.get(i);
+                if (aux.getId().equals(id)) {
                     users.remove(i);
                     Singleton.getINSTANCE().writeUser();
+                    return aux;
                 }
             }
         }
+        return null;
     }
 
 }

@@ -5,7 +5,12 @@
 package views.logisticsEmployee;
 
 import controllers.FlightsController;
+import enums.Event;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -45,12 +50,16 @@ public class Flights extends javax.swing.JInternalFrame {
         fillTable();
     }
 
+    private boolean hasEmptySearchField() {
+        return (txtSearch.getText().isEmpty());
+    }
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
         LSE<Flight> flights = controller.getFlights();
         model.setColumnIdentifiers(new Object[]{
-            "Capitan", "Avión", "Fecha", "Hora", "Origen", "Destino", "Tiempo aprox"
+            "ID", "Capitan", "Avión", "Fecha", "Hora", "Origen", "Destino", "Tiempo aprox"
         });
 
         flightsTable.setModel(model);
@@ -59,9 +68,13 @@ public class Flights extends javax.swing.JInternalFrame {
         sorter = new TableRowSorter<>(model);
         flightsTable.setRowSorter(sorter);
 
+        List<Flight> flightList = new ArrayList<>(flights.size());
+
         for (int i = 0; i < flights.size(); i++) {
             Flight flight = flights.get(i);
+            flightList.add(flight);
             model.addRow(new Object[]{
+                flight.getId(),
                 flight.getCaptain().getFullname(),
                 flight.getAirplane().getModel(),
                 flight.getDate(),
@@ -70,6 +83,24 @@ public class Flights extends javax.swing.JInternalFrame {
                 flight.getDestination(),
                 flight.getAproximateTime()
             });
+        }
+
+        Comparator<Flight> dateTimeComparator = Comparator.comparing(
+                flight -> LocalDateTime.of(flight.getDate(), flight.getHour())
+        );
+
+        flightList.sort(dateTimeComparator);
+
+        for (int i = 0; i < flightList.size(); i++) {
+            Flight flight = flightList.get(i);
+            model.setValueAt(flight.getId(), i, 0);
+            model.setValueAt(flight.getCaptain().getFullname(), i, 1);
+            model.setValueAt(flight.getAirplane().getModel(), i, 2);
+            model.setValueAt(flight.getDate(), i, 3);
+            model.setValueAt(flight.getHour(), i, 4);
+            model.setValueAt(flight.getOrigin(), i, 5);
+            model.setValueAt(flight.getDestination(), i, 6);
+            model.setValueAt(flight.getAproximateTime(), i, 7);
         }
     }
 
@@ -255,6 +286,10 @@ public class Flights extends javax.swing.JInternalFrame {
                 controller.deleteFlight(Integer.parseInt(id));
                 fillTable();
                 JOptionPane.showMessageDialog(null, "Vuelo eliminado correctamente");
+
+//                this.fli = flight;
+//                this.evt = Event.DELETE;
+//                controller.addToZ(fli);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un vuelo de la tabla");
@@ -271,11 +306,36 @@ public class Flights extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionActionPerformed
-        
+        int selected = flightsTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            int id = Integer.parseInt(flightsTable.getModel().getValueAt(selected, 0).toString());
+            Flight flight = controller.searchFlight(id);
+
+            if (flight != null) {
+                view.validateDesktop();
+                view.openUpdatedFlightView(airline, flight, this);
+            } else {
+                System.out.println("es null");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un vuelo de la tabla");
+        }
     }//GEN-LAST:event_btnGestionActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        
+        if (hasEmptySearchField()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un id a la hora de buscar");
+            return;
+        }
+        int id = Integer.parseInt(txtSearch.getText());
+
+        Flight flight = controller.searchFlight(id);
+
+        if (flight != null) {
+            JOptionPane.showMessageDialog(null, "El vuelo con destino a " + flight.getDestination() + " a mando del capitán " + flight.getCaptain().getFullname());
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
 
